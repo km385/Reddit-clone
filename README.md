@@ -10,8 +10,20 @@
 - symfony serve -d --no-tls
 ---
 ### Frontend Startup:
--
--
+Docker Setup
+
+```sh
+docker build . -t reddit-clone-client
+```
+```sh
+docker run -d -p 8080:80 reddit-clone-client
+```
+
+Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
 ---
 ### How To check Database:
 - start database server
@@ -20,12 +32,14 @@
 - run "\d <table_name>" to check structure of given table.
 ---
 ### Tech stack:
-| Technology        | Version    |
-| :---- | :----: |
-| Symfony          | v7.0.3  |
-| Api Platform     | v3.2.13       |
-| PHP              | v8.2.12     |
-| Postgres         | v16-alpine     |
+| Technology   |  Version   |
+|:-------------|:----------:|
+| Symfony      |   v7.0.3   |
+| Api Platform |  v3.2.13   |
+| PHP          |  v8.2.12   |
+| Postgres     | v16-alpine |
+| Vue          |  v3.4.15   |
+| Vite         |  v5.0.11   |
 ---
 ### To look into:
 -
