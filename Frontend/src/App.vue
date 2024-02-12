@@ -10,7 +10,7 @@ import UserMenu from "@/components/navbar/UserMenu.vue";
 
 <template>
     <header class="fixed top-0 w-full z-[999]">
-        <div class="flex gap-4 items-center w-full bg-[#1a1a1b] text-white h-12">
+        <div class="flex gap-4 items-center w-full bg-[#1a1a1b] text-white h-12 outline outline-1 outline-gray-700">
             <RedditLogo/>
             <CommunitiesMenu />
             <SearchBar/>
@@ -19,7 +19,7 @@ import UserMenu from "@/components/navbar/UserMenu.vue";
             <UserMenu/>
         </div>
     </header>
-    <div class="bg-[#030303] mt-12 overflow-y-auto pt-5 ">
+    <div class="bg-[#030303] pt-5 ">
         <RouterView />
     </div>
 

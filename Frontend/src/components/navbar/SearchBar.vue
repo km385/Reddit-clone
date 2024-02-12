@@ -1,9 +1,13 @@
 <template>
     <div class="flex grow cursor-pointer self-stretch py-1 min-w-20">
-        <input type="search" class="search rounded-full pl-14 text-white w-full " placeholder="Search Reddit">
+        <input type="search"
+               class="search rounded-full pl-14 text-white w-full border border-gray-700 text-sm
+               hover:border-gray-400
+               focus:border-gray-400 focus:outline-0"
+               placeholder="Search Reddit">
     </div>
 </template>
-<script>
+<script lang="ts">
 export default {
     name: 'SearchBar'
 }
