@@ -9,7 +9,11 @@ async function getRequest() {
 
     console.log('get request greetings')
 
-    const res = await axios.get('/greetings?page=1')
+    const res = await axios.get('https://localhost/greetings?page=1', {
+        headers: {
+            "Content-Type": "application/ld+json"
+        }
+    })
     console.log('get request greetings')
     console.log(res)
     console.log(res.data)
@@ -20,7 +24,11 @@ async function postRequest() {
 
     const form = new FormData()
     form.append('name', "nowe imie")
-    const res = await axios.post('/greetings', form)
+    const res = await axios.post('https://localhost/greetings', form, {
+        headers: {
+            "Content-Type": "application/ld+json"
+        }
+    })
     console.log(res)
     console.log(res.data)
 }
