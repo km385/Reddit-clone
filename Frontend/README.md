@@ -1,4 +1,4 @@
-# Frontend
+# Reddit Clone Backend
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -53,9 +53,23 @@ npm run lint
 
 ### Docker Setup
 
+Build the Docker image:
+
 ```sh
 docker build . -t reddit-clone-client
 ```
+
+Run the Docker container:
+
 ```sh
-docker run -d -p 8080:80 reddit-clone-client
+docker run -d -p 8080:80 --name reddit-clone-frontend reddit-clone-client
 ```
+
+## Team
+
+| Who                                         | What      |
+| ------------------------------------------- | --------- |
+| [@Jakub F](https://github.com/km385)        | Frontend  |
+| [@Mateusz C](https://github.com/MateuszCzz) | Backend   |
+
+---

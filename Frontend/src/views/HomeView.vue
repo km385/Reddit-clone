@@ -9,15 +9,27 @@ async function getRequest() {
 
     console.log('get request greetings')
 
-    const res = await axios.get('https://localhost/greetings?page=1', {
+    const res = await axios.get('https://localhost/api/comms', {
+        params: {
+            page: 1
+        },
         headers: {
-            "Content-Type": "application/ld+json"
+            'accept': 'application/ld+json'
         }
     })
-    console.log('get request greetings')
-    console.log(res)
-    console.log(res.data)
+        .then(response => {
+            // Handle the response
+            console.log(response.data);
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+        });
 }
+
+
+
+
 
 async function postRequest() {
     console.log('post request')
@@ -39,23 +51,23 @@ async function postRequest() {
     <main class="text-white mt-12">
         <div class="flex justify-center gap-4">
             <div class="flex flex-col gap-4 items-center">
-                <CreatePost/>
+                <CreatePost />
 
 
-                <button class="bg-blue-500 rounded-md p-2" @click="getRequest">greetings</button>
-                <button class="bg-blue-500 rounded-md p-2" @click="postRequest">post</button>
+                <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>
+                <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
 
 
                 <div v-for="n in 5" :key="n">
                     <router-link :to="`/r/${n}/comments/${n}`">
-                        <TextPost/>
+                        <TextPost />
                     </router-link>
                 </div>
 
             </div>
 
             <div class="lg:flex-col gap-4 hidden lg:flex">
-                <HomeCommunity/>
+                <HomeCommunity />
                 <div class="w-[340px] flex flex-col rounded-md border border-gray-600 bg-[#1a1a1b]">
 
                 </div>

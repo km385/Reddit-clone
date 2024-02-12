@@ -1,2 +1,5 @@
 .env
 .idea
+TODO.md
+CHANGED.md
+/database_structure/*

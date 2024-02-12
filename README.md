@@ -1,37 +1,59 @@
-# Reddit-clon
-### Dockerized clone of reddit, split into Symfony Api Platform backend and Vue.js Frontend
----
-### Backend Startup:
-- prepare .env file
-- composer install
-- start database server / docker-compose up --build
-- php bin/console doctrine:migrations:diff
-- php bin/console doctrine:migrate
-- symfony serve -d --no-tls
----
-### Frontend Startup:
-Docker Setup
+# Reddit Clone
+
+A Dockerized clone of Reddit, split into Symfony/Api Platform Backend and Vue.js Frontend.
+
+## Backend Startup
+
+1. Prepare a `.env.local` file based on the provided example.
+2. Run `composer install`.
+3. Create Docker images for the database and PHP server:
+
+   ```sh
+   docker compose --env-file .env.local build --no-cache
+   ```
+
+4. Start up containers:
+
+   ```sh
+   docker compose --env-file .env.local up --wait
+   ```
+
+5. Visit [https://localhost/api](https://localhost/api) to verify the configuration.
+
+### Local PHP Server
+
+If you prefer to use a local PHP server (database server is still required), run:
+
+```sh
+symfony serve -d
+```
+
+## Frontend Startup
+
+### Docker Setup
+
+Build the Docker image:
 
 ```sh
 docker build . -t reddit-clone-client
 ```
+
+Run the Docker container:
+
 ```sh
-docker run -d -p 8080:80 reddit-clone-client
+docker run -d -p 8080:80 --name reddit-clone-frontend reddit-clone-client
 ```
 
-Compile and Hot-Reload for Development
+### Local Development Server 
+
+For development purposes, compile and hot-reload using:
 
 ```sh
 npm run dev
 ```
----
-### How To check Database:
-- start database server
-- login with psql -U <username> -d <database_name>
-- run "\dt" or "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' );" For list of tables.
-- run "\d <table_name>" to check structure of given table.
----
-### Tech stack:
+
+## Tech Stack
+
 | Technology   |  Version   |
 |:-------------|:----------:|
 | Symfony      |   v7.0.3   |
@@ -40,14 +62,12 @@ npm run dev
 | Postgres     | v16-alpine |
 | Vue          |  v3.4.15   |
 | Vite         |  v5.0.11   |
----
-### To look into:
--
---- 
-### Team
-| Who | What |
-| :---: | :---: |
-| [@Jakub F](https://github.com/km385) | Frontend |
-| [@Mateusz C](https://github.com/MateuszCzz) | Backend |
+
+## Team
+
+| Who                                          | What     |
+|:-------------------------------------------- |:--------:|
+| [@Jakub F](https://github.com/km385)        | Frontend |
+| [@Mateusz C](https://github.com/MateuszCzz) | Backend  |
 
 ---
