@@ -31,7 +31,7 @@ If you prefer to use a local PHP server instead of Docker:
     ```sh
     composer install
     ```
->⚠️ **Warning:** It might be nececery to change the Database URL in `env.local` in order to connect with the database.
+   >⚠️ **Warning:** It might be necessary to change the Database URL in `env.local` in order to connect with the database.
  
 2. Start the PHP server:
 
