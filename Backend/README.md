@@ -8,33 +8,34 @@ This project is a Dockerized REST API built with Symfony and Api Platform.
 2. Run `composer install`.
 3. Create Docker images for the database and PHP server:
 
-   ```sh
-   docker compose --env-file .env.local build --no-cache
-   ```
+    ```sh
+    docker compose --env-file .env.local build --no-cache
+    ```
+   >⚠️ **Warning:** Rebuilding images can result in dangling images. Remember to clean them off after each use.
 
 4. Start up containers:
 
-   ```sh
-   docker compose --env-file .env.local up --wait
-   ```
+    ```sh
+    docker compose --env-file .env.local up --wait
+    ```
 
-5. Navigate to [https://localhost/api](https://localhost/api) to verify the configuration.
+5. After successfully configuring the server, visit [https://localhost/api](https://localhost/api) to test server API endpoints, or check out [http://localhost/_profiler](http://localhost/_profiler) for server statistics.
 
 ### Local PHP Server
 
 If you prefer to use a local PHP server (database server is still required) run:
 
-```sh
-symfony serve -d
-```
+    ```sh
+    symfony serve -d
+    ```
 
 ### Migrations
 
 In case migrations didn't run by default run:
 
-```sh
-php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
-```
+  ```sh
+  php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+  ```
 
 ## Managing the Database
 
@@ -49,7 +50,8 @@ php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migratio
   ```sh
   \dt
   ```
-     or
+  or
+
   ```sh
   SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' );
   ```
@@ -70,7 +72,7 @@ php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migratio
   php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
   ```
 
-- To generate dummy data with fixtures(seeders):
+- To generate dummy data with fixtures (Laravel Seeders):
 
   ```sh
   symfony console doctrine:fixtures:load
