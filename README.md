@@ -8,49 +8,50 @@ A Dockerized clone of Reddit, split into Symfony/Api Platform Backend and Vue.js
 2. Run `composer install`.
 3. Create Docker images for the database and PHP server:
 
-   ```sh
-   docker compose --env-file .env.local build --no-cache
-   ```
+    ```sh
+    docker compose --env-file .env.local build --no-cache
+    ```
+   >⚠️ **Warning:** Rebuilding images can result in dangling images. Remember to clean them off after each use.
 
 4. Start up containers:
 
-   ```sh
-   docker compose --env-file .env.local up --wait
-   ```
+    ```sh
+    docker compose --env-file .env.local up --wait
+    ```
 
-5. Visit [https://localhost/api](https://localhost/api) to verify the configuration.
+5. After successfully configuring the server, visit [https://localhost/api](https://localhost/api) to test server API endpoints, or check out [http://localhost/_profiler](http://localhost/_profiler) for server statistics.
 
 ### Local PHP Server
 
-If you prefer to use a local PHP server (database server is still required), run:
+If you prefer to use a local PHP server (database server is still required) run:
 
-```sh
-symfony serve -d
-```
+    ```sh
+    symfony serve -d
+    ```
 
 ## Frontend Startup
 
 ### Docker Setup
 
-Build the Docker image:
+1. Build the Docker image:
 
-```sh
-docker build . -t reddit-clone-client
-```
+   ```sh
+   docker build . -t reddit-clone-client
+   ```
 
-Run the Docker container:
+2. Run the Docker container:
 
-```sh
-docker run -d -p 8080:80 --name reddit-clone-frontend reddit-clone-client
-```
+   ```sh
+   docker run -d -p 8080:80 --name reddit-clone-frontend reddit-clone-client
+   ```
 
-### Local Development Server 
+### Local Development Server
 
 For development purposes, compile and hot-reload using:
 
-```sh
-npm run dev
-```
+   ```sh
+   npm run dev
+   ```
 
 ## Tech Stack
 
