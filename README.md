@@ -1,33 +1,59 @@
 # Reddit Clone
-
-A Dockerized clone of Reddit, split into Symfony/Api Platform Backend and Vue.js Frontend.
+Welcome to the Reddit Clone project! This is a dockerized application split into Symfony/Api Platform Backend and Vue.js/Typescript Frontend.
 
 ## Backend Startup
 
 1. Prepare a `.env.local` file based on the provided example.
-2. Run `composer install`.
-3. Create Docker images for the database and PHP server:
+2. Build Docker images for the database and PHP server using the following command:
 
     ```sh
     docker compose --env-file .env.local build --no-cache
     ```
    >⚠️ **Warning:** Rebuilding images can result in dangling images. Remember to clean them off after each use.
+   >
+   >⚠️ **Warning:** Git can break docker containers with converting line ending from windows's LF to CRLF. 
+   To disable CRLF conversion globally, run `git config --global core.autocrlf false`, and clone again.
 
-4. Start up containers:
+3. Start up the containers with:
 
     ```sh
     docker compose --env-file .env.local up --wait
     ```
 
-5. After successfully configuring the server, visit [https://localhost/api](https://localhost/api) to test server API endpoints, or check out [http://localhost/_profiler](http://localhost/_profiler) for server statistics.
+4. Once the server is successfully configured, you can test the API endpoints by visiting [https://localhost/api](https://localhost/api). Additionally, you can check out server statistics at [http://localhost/_profiler](http://localhost/_profiler).
 
 ### Local PHP Server
 
-If you prefer to use a local PHP server (database server is still required) run:
+If you prefer to use a local PHP server instead of Docker:
+
+1. Install necessary dependencies with Composer:
 
     ```sh
-    symfony serve -d
+    composer install
     ```
+>⚠️ **Warning:** It might be nececery to change the Database URL in `env.local` in order to connect with the database.
+ 
+2. Start the PHP server:
+
+    If you have Symfony CLI installed:
+    
+      ```sh
+      symfony serve -d
+      ```
+    
+    If you don't have Symfony CLI installed:
+    
+      ```sh
+      php -S localhost:8000 -t public
+      ```
+
+### Lack of tables:
+
+In case migrations didn't run by default run, use:
+
+```sh
+php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+```
 
 ## Frontend Startup
 
