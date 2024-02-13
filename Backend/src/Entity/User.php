@@ -102,14 +102,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:read'])]
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
-    #[MaxDepth(2)]
-    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'owner', orphanRemoval: true)]
-    #[Groups(['user:read'])]
+
+    //#[MaxDepth(2)]
+    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'owner', orphanRemoval: false)]
+    #[Groups(['user:read', 'user:write'])]
     private Collection $ownedCommunities;
 
     #[Assert\NotBlank(groups: ['user:write'])]
     #[Groups(['user:write'])]
     private ?string $plainPassword = null;
+
+    #[Groups(['user:read', 'user:write'])]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
+    private Collection $joinedCommunities;
 
     public function __construct()
     {
@@ -117,6 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $this->roles[] = 'ROLE_USER';
         $this->ownedCommunities = new ArrayCollection();
+        $this->joinedCommunities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +268,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($ownedCommunity->getOwner() === $this) {
                 $ownedCommunity->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getJoinedCommunities(): Collection
+    {
+        return $this->joinedCommunities;
+    }
+
+    public function addJoinedCommunity(Membership $joinedCommunity): static
+    {
+        if (!$this->joinedCommunities->contains($joinedCommunity)) {
+            $this->joinedCommunities->add($joinedCommunity);
+            $joinedCommunity->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJoinedCommunity(Membership $joinedCommunity): static
+    {
+        if ($this->joinedCommunities->removeElement($joinedCommunity)) {
+            // set the owning side to null (unless already changed)
+            if ($joinedCommunity->getMember() === $this) {
+                $joinedCommunity->setMember(null);
             }
         }
 

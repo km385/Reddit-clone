@@ -13,6 +13,8 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
 use App\Repository\CommunityRepository;
 use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
@@ -27,14 +29,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommunityRepository::class)]
 #[ApiResource(
-    description:"A community of users containing posts from given theme.",
-    shortName:"Comm",
+    description: "A community of users containing posts from given theme.",
+    //shortName: "Comm",
     operations: [
         // new Get,
-         new GetCollection,
-         new Post,
+        new GetCollection,
+        new Post,
         // new Patch,
-         new Delete,
+        new Delete,
         // new Put,
     ],
     normalizationContext: [
@@ -45,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     paginationItemsPerPage: 25,
 )]
-#[ApiFilter(OrderFilter::class, properties: ['id', 'name','numberOfUsers'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'numberOfUsers'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'status' => 'exact', 'name' => 'ipartial', 'desciption' => 'ipartial'])]
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 #[ApiFilter(RangeFilter::class, properties: ['numberOfUsers'])]
@@ -56,7 +58,7 @@ class Community
     const STATUS_PUBLIC = 'public';
     const STATUS_PRIVATE = 'private';
     const STATUS_RESTRICTED = 'restricted';
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -72,15 +74,16 @@ class Community
     #[Groups(['community:read', 'community:write'])]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
-    #[Assert\PositiveOrZero]
+
+   // #[Assert\PositiveOrZero]
     #[Groups(['community:read'])]
     #[ORM\Column]
-    private ?int $numberOfUsers = 1;
+    private ?int $numberOfUsers = 0;
 
     #[Groups(['community:read'])]
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
-    
+
     #[Assert\Regex(
         pattern: '/^(public|restricted|private)$/',
         message: 'The status must be "public", "restricted", or "private".'
@@ -97,12 +100,17 @@ class Community
     #[ORM\ManyToOne(inversedBy: 'ownedCommunities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
+    
+    #[Groups(['community:read', 'community:write'])]
+    #[ORM\OneToMany(mappedBy: 'community', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
+    private Collection $members;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->members = new ArrayCollection();
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +145,28 @@ class Community
         return $this->numberOfUsers;
     }
 
+    /**
+     * Increases the number of users associated with this community.
+     *
+     * @return int The updated number of users after incrementing.
+     */
+    public function increaseNumberOfUsers(): int
+    {
+        $this->numberOfUsers++;
+        return $this->numberOfUsers;
+    }
+
+    /**
+     * Decreases the number of users associated with this community.
+     *
+     * @return int The updated number of users after decrementing.
+     */
+    public function decreaseNumberOfUsers(): int
+    {
+        $this->numberOfUsers--;
+        return $this->numberOfUsers;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -168,7 +198,7 @@ class Community
         }
 
         $this->status = $status;
-    
+
         return $this;
     }
 
@@ -193,6 +223,47 @@ class Community
     {
         $this->owner = $owner;
 
+        if ($owner !== null && !$this->members->contains($owner)) {
+            $membership = new Membership();
+            $membership->setMember($owner);
+            $membership->setCommunity($this);
+            $this->members->add($membership);
+        }
+    
+        return $this;
+    }
+    
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Membership $member): static
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setCommunity($this);
+        }
+
+        // Increase number of users
+        $this->increaseNumberOfUsers();
+        return $this;
+    }
+
+    public function removeMember(Membership $member): static
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getCommunity() === $this) {
+                $member->setCommunity(null);
+            }
+        }
+        // Increase number of users
+        $this->decreaseNumberOfUsers();
         return $this;
     }
 }
