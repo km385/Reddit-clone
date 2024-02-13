@@ -20,6 +20,7 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
+		curl \
 	;
 
 RUN set -eux; \
@@ -30,6 +31,12 @@ RUN set -eux; \
 		opcache \
 		zip \
 	;
+
+# Install Symfony CLI
+RUN apk add --no-cache bash \
+    && curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony \
+    && apk del bash
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
