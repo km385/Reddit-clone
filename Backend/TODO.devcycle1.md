@@ -59,8 +59,8 @@
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
 |                          | Implementing `Memberships` entity     | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
-|                          | Adding Filtrations                    | 🚀 Upcoming  |
-|                          | Adding Normalization Groups           | 🚀 Upcoming  |
+|                          | Adding Filtrations                    | ✅ Done  |
+|                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | 🚀 Upcoming  |
 |                          | Adding Factory                        | 🚀 Upcoming  |
 |                          | Securing Requests              | ⭕ Not Started  |
