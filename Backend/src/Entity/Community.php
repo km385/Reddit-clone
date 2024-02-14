@@ -153,14 +153,14 @@ class Community
         ;
     }
 
-    /**
-     * @return string of human-readable information when comunity was created
-     */
-    #[Groups(['community:read'])]
-    public function getCreatedAtAgo(): ?string
-    {
-        return Carbon::instance($this->createdAt)->diffForHumans();
-    }
+    // /**
+    //  * @return string of human-readable information when comunity was created
+    //  */
+    // #[Groups(['community:read'])]
+    // public function getCreatedAtAgo(): ?string
+    // {
+    //     return Carbon::instance($this->createdAt)->diffForHumans();
+    // }
 
     public function getStatus(): ?string
     {

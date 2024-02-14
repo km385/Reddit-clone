@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     // DEBUG ONLY:
-    #[Groups(['user:read', 'user:write'])]
+    // #[Groups(['user:read', 'user:write'])]
     /**
      * @var string The hashed password
      */

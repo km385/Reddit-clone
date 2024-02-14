@@ -34,7 +34,6 @@
 | User Table              |                               |  ❌ -Incomplete- ❌ |
 |                          | Implementing `Users` entity           | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
-|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Hashing Passwords                     | ✅ Done          |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
@@ -47,7 +46,6 @@
 |                          | Implementing `Communities` entity     | ✅ Done          |
 |                          | Adding status                           | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
-|                          | Adding Created Ago for Humans               | ✅ Done  |
 |                          | Making Amount of Members Change Dynamically| ✅ Done  |
 |                          | Make Owner Automatically Become Member| ✅ Done  |
 |                          | Change Owner to Creator               | ✅ Done  |
@@ -61,7 +59,6 @@
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
 |                          | Implementing `Memberships` entity     | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
-|                          | Adding Created Ago for Humans               | ✅ Done  |
 |                          | Adding Filtrations                    | 🚀 Upcoming  |
 |                          | Adding Normalization Groups           | 🚀 Upcoming  |
 |                          | Adding Embed                          | 🚀 Upcoming  |
@@ -74,7 +71,6 @@
 |                          | Adding status                           | ⭕ Not Started          |
 |                          | Adding Image Posts               | ⭕ Not Started   |
 |                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
@@ -85,7 +81,6 @@
 | _-_ Table (Post-Commu) |                        | ❌ -Incomplete- ❌|
 |                          | Implementing `-` entity            | ⭕ Not Started  |
 |                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
@@ -97,7 +92,6 @@
 |                          | Implementing `Comments` entity            | ⭕ Not Started  |
 |                          | Adding status                           | ⭕ Not Started    |
 |                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
@@ -108,7 +102,6 @@
 | _-_ Table (Comment-Post) |                         | ❌ -Incomplete- ❌|
 |                          | Implementing `-` entity            | ⭕ Not Started  |
 |                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
@@ -125,3 +118,6 @@
 |                          | Saving Files from Requests     | ⭕ Not Started|
 |                          | Providing Files for Requests   | ⭕ Not Started|
 |                          | Tests                          | ⭕ Not Started|
+
+## Notes:
+- Remove Carbon if not needed
