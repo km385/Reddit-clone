@@ -75,8 +75,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable:true)]
     private array $roles = [];
 
-    //DEBUG ONLY:
-    //#[Groups(['user:read', 'user:write'])]
+    // DEBUG ONLY:
+    #[Groups(['user:read', 'user:write'])]
     /**
      * @var string The hashed password
      */
@@ -119,10 +119,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        // guarantee every user at least has ROLE_USER
-        $this->roles[] = 'ROLE_USER';
         $this->ownedCommunities = new ArrayCollection();
         $this->joinedCommunities = new ArrayCollection();
+        // guarantee every user at least has ROLE_USER
+        $this->roles[] = 'ROLE_USER';
+
     }
 
     public function getId(): ?int

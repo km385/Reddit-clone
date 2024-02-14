@@ -19,9 +19,9 @@
 |                           | Setting Up Dummy Project                      | ✅ Done            |
 |                           | Preparing Readme                              | ✅ Done            |
 |                           | Adding Symfony CLI Alternatives to Readme     | ⭕ Not Started   |
-|                           | Establishing Branch/Commit Structure          | ✅ Done            |
+|                           | Establishing Branch & Commit Structure          | ✅ Done            |
 |                           | Testing Pull Requests                         | ✅ Done            |
-|                           | Verifying Connection Between Frontend/Backend | ✅ Done   |
+|                           | Verifying Connection Between Frontend & Backend | ✅ Done   |
 |                           | Implementing Workflows                        | ⭕ Not Started    |
 | Setting up the application |                                       |  ❌ -Incomplete- ❌   |
 |                          | Setting up Symfony framework          | ✅ Done          |
@@ -30,82 +30,90 @@
 |                          | Setting up Caddy                      | ⭕ Not Started   |
 |                          | Setting up Mercury                    | ⭕ Not Started   |
 |                          | Moving Secrets from .env              | ⭕ Not Started  |
+|                          | Optimize Docker Image                 | ⭕ Not Started  |
 | User Table              |                               |  ❌ -Incomplete- ❌ |
 |                          | Implementing `Users` entity           | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
+|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Hashing Passwords                     | ✅ Done          |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | 🚀 Upcoming  |
 |                          | Adding Factory                        | ✅ Done  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Community Table          |                            | ❌ -Incomplete- ❌|
 |                          | Implementing `Communities` entity     | ✅ Done          |
 |                          | Adding status                           | ✅ Done          |
-|                          | Adding Necessary Fields               | ✅ Done   |
-|                          | Making Amount of Members Change Dynamically| ⏳ In Progress  |
-|                          | Make Owner Automatically Become Member| ⏳ In Progress  |
-|                          | Change Owner to Creator               | ⏳ In Progress  |
+|                          | Adding Necessary Fields               | ✅ Done  |
+|                          | Adding Created Ago for Humans               | ✅ Done  |
+|                          | Making Amount of Members Change Dynamically| ✅ Done  |
+|                          | Make Owner Automatically Become Member| ✅ Done  |
+|                          | Change Owner to Creator               | ✅ Done  |
 |                          | Adding Filtrations                    | ✅ Done  |
-|                          | Adding Normalization Groups           | ⏳ In Progress  |
+|                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | 🚀 Upcoming  |
 |                          | Adding Factory                        | ✅ Done  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests                       | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
 |                          | Implementing `Memberships` entity     | ✅ Done          |
-|                          | Adding Necessary Fields               | ⏳ In Progress   |
+|                          | Adding Necessary Fields               | ✅ Done  |
+|                          | Adding Created Ago for Humans               | ✅ Done  |
 |                          | Adding Filtrations                    | 🚀 Upcoming  |
 |                          | Adding Normalization Groups           | 🚀 Upcoming  |
 |                          | Adding Embed                          | 🚀 Upcoming  |
 |                          | Adding Factory                        | 🚀 Upcoming  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Post Table                 |                        | ❌ -Incomplete- ❌|
 |                          | Implementing `Posts` entity            | ⭕ Not Started  |
 |                          | Adding status                           | ⭕ Not Started          |
 |                          | Adding Image Posts               | ⭕ Not Started   |
-|                          | Adding Necessary Fields               | ⭕ Not Started   |
+|                          | Adding Necessary Fields               | ⭕ Not Started  |
+|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | _-_ Table (Post-Commu) |                        | ❌ -Incomplete- ❌|
 |                          | Implementing `-` entity            | ⭕ Not Started  |
-|                          | Adding Necessary Fields               | ⭕ Not Started   |
+|                          | Adding Necessary Fields               | ⭕ Not Started  |
+|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Comment Table            |                             | ❌ -Incomplete- ❌|
 |                          | Implementing `Comments` entity            | ⭕ Not Started  |
 |                          | Adding status                           | ⭕ Not Started    |
-|                          | Adding Necessary Fields               | ⭕ Not Started   |
+|                          | Adding Necessary Fields               | ⭕ Not Started  |
+|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | _-_ Table (Comment-Post) |                         | ❌ -Incomplete- ❌|
 |                          | Implementing `-` entity            | ⭕ Not Started  |
-|                          | Adding Necessary Fields               | ⭕ Not Started   |
+|                          | Adding Necessary Fields               | ⭕ Not Started  |
+|                          | Adding Created Ago for Humans               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
 |                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Adding Securing Requests              | ⭕ Not Started  |
+|                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | User Authentication |                            | ❌ -Incomplete- ❌|

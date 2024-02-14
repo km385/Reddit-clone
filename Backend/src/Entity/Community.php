@@ -30,11 +30,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CommunityRepository::class)]
 #[ApiResource(
     description: "A community of users containing posts from given theme.",
-    //shortName: "Comm",
+    shortName: "Commu",
     operations: [
         // new Get,
         new GetCollection,
-        new Post,
+        new Post(
+            denormalizationContext: ['groups' => ['community:create']]
+        ),
         // new Patch,
         new Delete,
         // new Put,
@@ -66,19 +68,14 @@ class Community
 
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 100, maxMessage: 'Community name should be between 3 and 100 characters long')]
-    #[Groups(['community:read', 'community:write'])]
+    #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $name = null;
 
     #[Assert\Length(min: 0, max: 500, maxMessage: 'Community description should be between 0 and 500 characters long')]
-    #[Groups(['community:read', 'community:write'])]
+    #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
-
-   // #[Assert\PositiveOrZero]
-    #[Groups(['community:read'])]
-    #[ORM\Column]
-    private ?int $numberOfUsers = 0;
 
     #[Groups(['community:read'])]
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
@@ -88,19 +85,19 @@ class Community
         pattern: '/^(public|restricted|private)$/',
         message: 'The status must be "public", "restricted", or "private".'
     )]
-    #[Groups(['community:read', 'community:write'])]
+    #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column(length: 10)]
     private ?string $status = self::STATUS_PUBLIC;
 
-    #[Groups(['community:read', 'community:write'])]
+    #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column]
     private ?bool $sendWelcomeMessage = false;
 
-    #[Groups(['community:read', 'community:write'])]
+    #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\ManyToOne(inversedBy: 'ownedCommunities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
-    
+
     #[Groups(['community:read', 'community:write'])]
     #[ORM\OneToMany(mappedBy: 'community', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $members;
@@ -140,36 +137,20 @@ class Community
         return $this;
     }
 
-    public function getNumberOfUsers(): ?int
-    {
-        return $this->numberOfUsers;
-    }
-
-    /**
-     * Increases the number of users associated with this community.
-     *
-     * @return int The updated number of users after incrementing.
-     */
-    public function increaseNumberOfUsers(): int
-    {
-        $this->numberOfUsers++;
-        return $this->numberOfUsers;
-    }
-
-    /**
-     * Decreases the number of users associated with this community.
-     *
-     * @return int The updated number of users after decrementing.
-     */
-    public function decreaseNumberOfUsers(): int
-    {
-        $this->numberOfUsers--;
-        return $this->numberOfUsers;
-    }
-
+    #[Groups(['community:read'])]
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return int current number of users that are members of this community
+     */
+    #[Groups(['community:read'])]
+    public function getTotalMembers(): ?int
+    {
+        return $this->members->count();
+        ;
     }
 
     /**
@@ -222,17 +203,15 @@ class Community
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
-
-        if ($owner !== null && !$this->members->contains($owner)) {
+        if ($owner !== null) {
             $membership = new Membership();
             $membership->setMember($owner);
             $membership->setCommunity($this);
             $this->members->add($membership);
         }
-    
+
         return $this;
     }
-    
 
     /**
      * @return Collection<int, Membership>
@@ -248,22 +227,16 @@ class Community
             $this->members->add($member);
             $member->setCommunity($this);
         }
-
-        // Increase number of users
-        $this->increaseNumberOfUsers();
         return $this;
     }
 
     public function removeMember(Membership $member): static
     {
         if ($this->members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
             if ($member->getCommunity() === $this) {
                 $member->setCommunity(null);
             }
         }
-        // Increase number of users
-        $this->decreaseNumberOfUsers();
         return $this;
     }
 }

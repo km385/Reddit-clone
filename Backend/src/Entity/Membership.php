@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MembershipRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MembershipRepository::class)]
 #[ApiResource]
@@ -23,6 +24,7 @@ class Membership
     #[ORM\JoinColumn(nullable: false)]
     private ?Community $community = null;
 
+    #[Groups(['community:read'])]
     #[ORM\ManyToOne(inversedBy: 'joinedCommunities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $member = null;
