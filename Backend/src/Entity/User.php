@@ -23,17 +23,25 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Serializer\Filter\PropertyFilter;
-
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use ApiPlatform\Metadata\ApiFilter;
 
-use Symfony\Component\Serializer\Annotation\MaxDepth;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource(
+    description: "Represents a single user in the system.",
     operations: [
         new GetCollection(),
-        new Post(processor: PasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
+        new Post(
+
+        ),
+        new Post(
+            processor: PasswordHasher::class,
+            validationContext: ['groups' => ['Default', 'user:create']],
+            denormalizationContext: ['groups' => ['user:create']]
+        ),
         //  new Get(),
         //  new Put(processor: PasswordHasher::class),
         // new Patch(processor: PasswordHasher::class),
@@ -68,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write', 'user:create'])]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 
@@ -85,17 +93,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank]
     #[Assert\Email]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write', 'user:create'])]
     #[ORM\Column(length: 200, unique: true)]
     private ?string $email = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write', 'user:create'])]
     #[ORM\Column(length: 50)]
     private ?string $login = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write', 'user:create'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $birthday = null;
 
@@ -103,13 +111,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
 
-    //#[MaxDepth(2)]
     #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'creator', orphanRemoval: false)]
     #[Groups(['user:read', 'user:write'])]
     private Collection $createdCommunities;
 
-    #[Assert\NotBlank(groups: ['user:write'])]
-    #[Groups(['user:write'])]
+    #[Assert\NotBlank(groups: ['user:create'])]
+    #[Groups(['user:write', 'user:create'])]
     private ?string $plainPassword = null;
 
     #[Groups(['user:read', 'user:write'])]
