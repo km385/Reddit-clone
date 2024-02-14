@@ -94,9 +94,9 @@ class Community
     private ?bool $sendWelcomeMessage = false;
 
     #[Groups(['community:read', 'community:write', 'community:create'])]
-    #[ORM\ManyToOne(inversedBy: 'ownedCommunities')]
+    #[ORM\ManyToOne(inversedBy: 'createdCommunities')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $owner = null;
+    private ?User $creator = null;
 
     #[Groups(['community:read', 'community:write'])]
     #[ORM\OneToMany(mappedBy: 'community', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
@@ -195,17 +195,17 @@ class Community
         return $this;
     }
 
-    public function getOwner(): ?User
+    public function getCreator(): ?User
     {
-        return $this->owner;
+        return $this->creator;
     }
 
-    public function setOwner(?User $owner): static
+    public function setCreator(?User $creator): static
     {
-        $this->owner = $owner;
-        if ($owner !== null) {
+        $this->creator = $creator;
+        if ($creator !== null) {
             $membership = new Membership();
-            $membership->setMember($owner);
+            $membership->setMember($creator);
             $membership->setCommunity($this);
             $this->members->add($membership);
         }

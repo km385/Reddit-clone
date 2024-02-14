@@ -34,9 +34,9 @@ use Doctrine\ORM\Mapping as ORM;
     operations: [
         new GetCollection(),
         new Post(processor: PasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
-      //  new Get(),
-      //  new Put(processor: PasswordHasher::class),
-       // new Patch(processor: PasswordHasher::class),
+        //  new Get(),
+        //  new Put(processor: PasswordHasher::class),
+        // new Patch(processor: PasswordHasher::class),
         new Delete(),
     ],
     normalizationContext: [
@@ -46,7 +46,7 @@ use Doctrine\ORM\Mapping as ORM;
         'groups' => ['user:write'],
     ],
     paginationItemsPerPage: 25
-    
+
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -59,7 +59,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nickname' => 'ipartial'])]
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 #[ApiFilter(PropertyFilter::class)]
-#[ApiFilter(ExistsFilter::class, properties: ['ownedCommunities'])]
+#[ApiFilter(ExistsFilter::class, properties: ['createdCommunities'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -72,7 +72,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 
-    #[ORM\Column(nullable:true)]
+    #[ORM\Column(nullable: true)]
     private array $roles = [];
 
     // DEBUG ONLY:
@@ -104,9 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $createdAt;
 
     //#[MaxDepth(2)]
-    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'owner', orphanRemoval: false)]
+    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'creator', orphanRemoval: false)]
     #[Groups(['user:read', 'user:write'])]
-    private Collection $ownedCommunities;
+    private Collection $createdCommunities;
 
     #[Assert\NotBlank(groups: ['user:write'])]
     #[Groups(['user:write'])]
@@ -119,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->ownedCommunities = new ArrayCollection();
+        $this->createdCommunities = new ArrayCollection();
         $this->joinedCommunities = new ArrayCollection();
         // guarantee every user at least has ROLE_USER
         $this->roles[] = 'ROLE_USER';
@@ -248,27 +248,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Community>
      */
-    public function getOwnedCommunities(): Collection
+    public function getCreatedCommunities(): Collection
     {
-        return $this->ownedCommunities;
+        return $this->createdCommunities;
     }
 
-    public function addOwnedCommunity(Community $ownedCommunity): static
+    public function addCreatedCommunity(Community $createdCommunity): static
     {
-        if (!$this->ownedCommunities->contains($ownedCommunity)) {
-            $this->ownedCommunities->add($ownedCommunity);
-            $ownedCommunity->setOwner($this);
+        if (!$this->createdCommunities->contains($createdCommunity)) {
+            $this->createdCommunities->add($createdCommunity);
+            $createdCommunity->setCreator($this);
         }
 
         return $this;
     }
 
-    public function removeOwnedCommunity(Community $ownedCommunity): static
+    public function removeCreatedCommunity(Community $createdCommunity): static
     {
-        if ($this->ownedCommunities->removeElement($ownedCommunity)) {
+        if ($this->createdCommunities->removeElement($createdCommunity)) {
             // set the owning side to null (unless already changed)
-            if ($ownedCommunity->getOwner() === $this) {
-                $ownedCommunity->setOwner(null);
+            if ($createdCommunity->getCreator() === $this) {
+                $createdCommunity->setCreator(null);
             }
         }
 

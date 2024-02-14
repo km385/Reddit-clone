@@ -53,7 +53,7 @@ final class CommunityFactory extends ModelFactory
             'description' => self::faker()->paragraph(),
             'sendWelcomeMessage' => self::faker()->boolean(),
             'status' => self::faker()->randomElement(self::STATUS_OPTIONS),
-            'owner' => UserFactory::new(),
+            'creator' => UserFactory::new(),
         ];
     }
 

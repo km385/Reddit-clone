@@ -14,7 +14,7 @@ class AppFixtures extends Fixture
         UserFactory::createMany(200);
         CommunityFactory::createMany(50, function () {
             return [
-                'owner' => UserFactory::random(),
+                'creator' => UserFactory::random(),
             ];
         });
         
