@@ -36,6 +36,7 @@ class Membership
     private ?\DateTimeInterface $createdAt;
 
     #[Assert\NotBlank]
+    #[Groups(['user:read'])]
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Community $community = null;
