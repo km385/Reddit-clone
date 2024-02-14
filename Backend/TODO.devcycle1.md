@@ -61,8 +61,8 @@
 |                          | Adding Necessary Fields               | ✅ Done  |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
-|                          | Adding Embed                          | 🚀 Upcoming  |
-|                          | Adding Factory                        | 🚀 Upcoming  |
+|                          | Adding Embed                          | ⏳ In Progress |
+|                          | Adding Factory                        | ✅ Done  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
