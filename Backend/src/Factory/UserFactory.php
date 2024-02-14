@@ -7,7 +7,6 @@ use App\Repository\UserRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ModelFactory<User>
@@ -32,27 +31,27 @@ final class UserFactory extends ModelFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
-    public function __construct( private UserPasswordHasherInterface $passwordHasher)
+    public function __construct()
     {
         parent::__construct();
     }
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function getDefaults(): array
     {
+        // Set login attribute to "login_<random_number>"
+        $login = 'login' . '_' . self::faker()->unique()->numberBetween(1, 1000000);
         return [
             'birthday' => self::faker()->dateTime(),
             'email' => self::faker()->email(),
-            'login' => self::faker()->text(50),
-            'nickname' => self::faker()->text(50),
-            'password' => 'password',
+            'login' => $login,
+            // Set nickname attribute to login or random string
+            'nickname' => self::faker()->boolean() ? $login : self::faker()->unique()->text(20),
+            // Set password attribute to prehashed value of "password"
+            'password' => '$2y$13$WIcQGXgUo.57nXa8PWXFe.jqOeTAWzil0tzNwcJKxWpYGRJx9Hn1S',
         ];
     }
 
@@ -62,12 +61,7 @@ final class UserFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this
-            ->afterInstantiate(function(User $user): void {
-                $user->setPassword($this->passwordHasher->hashPassword(
-                    $user,
-                    $user->getPassword()
-                ));
-            })
+            // ->afterInstantiate(function(User $user): void {})
         ;
     }
 
