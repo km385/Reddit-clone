@@ -9,27 +9,19 @@ import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
 </script>
 
 <template>
-    <div class="flex max-w-[600px] outline outline-1 outline-[#343536] hover:outline-[#818384] rounded-md cursor-pointer">
-        <div class="bg-[#161617] rounded-l-md w-10 text-white">
-            <div class="px-2 text-center flex flex-col items-center gap-1 mt-2">
-                <div class="w-5">
-                    <ArrowUpIcon/>
-                </div>
-                <p>3.3k</p>
-                <div class="w-5">
-                    <ArrowDownIcon/>
-                </div>
+    <div class="max-w-[600px] hover:bg-hover-light rounded-xl cursor-pointer">
 
-            </div>
-        </div>
-        <div class="bg-[#1a1a1b] rounded-r-md grow flex flex-col *:mx-2">
-            <div class=" text-sm mt-2 flex gap-1">
-                <p class="text-white">r/shitposting</p>
-                <p class="text-gray-400">Posted by u/Comfortable_Rush2528 5 hours ago</p>
+        <div class="rounded-r-md grow flex flex-col *:mx-4">
+            <div class="text-sm mt-2 flex items-center gap-1">
+                <p class="text-white hover:text-text-blue">r/shitposting</p>
+                <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
+                <div class="hover:bg-hover-dark hover:rounded-full p-1">
+                    <icon-dots />
+                </div>
             </div>
             <div class="text-white text-xl">Mam dosyć</div>
             <div class="">
-                <p class="line-clamp-[8] text-white">
+                <p class="line-clamp-[6] text-white">
                     Mam 26 lat. Magistra na karku. Do wczoraj marzenia. Tyle lat nauki, podczas studiów dodatkowe kursy.
                     Cały czas się rozwijam i douczam. Na samym początku kariery trafiłam na bardzo toksyczne miejsce gdzie
                     każdy starał się zgnoić młodego a druga połowa udawała że nie istnieje. Rzuciłam tą pracę bo nie dawałam
@@ -44,21 +36,29 @@ import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
                     wszystko co mogło pójść źle idzie źle. Nie wiem co mam dalej robić
                 </p>
             </div>
-            <div class="flex justify-start gap-1 text-gray-400 py-1 text-sm">
-                <div class="hover:bg-[#2d2d2e] rounded-sm p-1 cursor-pointer flex items-center gap-1">
-                    <IconComments/>
-                    188 Comments
+            <div class="flex justify-start gap-1 text-white py-1 text-sm">
+                <div class="bg-[#1a282d] rounded-full cursor-pointer flex ">
+                    <div class="hover:text-red-600 hover:bg-hover-dark flex rounded-full p-2">
+                        <arrow-up-icon class="w-4 "/>
+                    </div>
+
+                    <div class="flex items-center">
+                        2332
+                    </div>
+
+                    <div class="hover:text-blue-600 hover:bg-hover-dark flex rounded-full p-2">
+                        <arrow-down-icon class="w-4"/>
+                    </div>
                 </div>
-                <div class="hover:bg-[#2d2d2e] rounded-sm p-1 cursor-pointer flex items-center gap-1">
+
+                <div class="hover:bg-hover-dark bg-[#1a282d] rounded-full px-4 py-2 cursor-pointer flex items-center gap-1">
+                    <IconComments/>
+                    188
+                </div>
+
+                <div class="hover:bg-hover-dark bg-[#1a282d] rounded-full px-4 py-2 cursor-pointer flex items-center gap-1">
                     <IconShare/>
                     Share
-                </div>
-                <div class="hover:bg-[#2d2d2e] rounded-sm p-1 cursor-pointer flex items-center gap-1">
-                    <IconBookmark />
-                    Save
-                </div>
-                <div class="hover:bg-[#2d2d2e] rounded-sm p-1 cursor-pointer flex items-center">
-                    <IconDots />
                 </div>
             </div>
         </div>

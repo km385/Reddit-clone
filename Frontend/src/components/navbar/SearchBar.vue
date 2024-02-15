@@ -1,5 +1,5 @@
 <template>
-    <div class="flex grow cursor-pointer self-stretch py-1 min-w-20">
+    <div class="flex cursor-pointer h-full py-1 min-w-20">
         <input type="search"
                class="search rounded-full pl-14 text-white w-full border border-gray-700 text-sm
                hover:border-gray-400
