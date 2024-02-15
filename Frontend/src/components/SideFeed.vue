@@ -23,7 +23,7 @@ const props = defineProps({
             <div class="grow text-xs">
                 {{props.name}}
             </div>
-            <icon-bookmark/>
+            <icon-bookmark :class="{'rotate-180 duration-300':feedOpen}"/>
         </div>
 
         <transition name="slide-fade">
