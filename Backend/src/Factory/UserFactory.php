@@ -46,7 +46,7 @@ final class UserFactory extends ModelFactory
         $login = 'login' . '_' . self::faker()->unique()->numberBetween(1, 1000000);
         return [
             'birthday' => self::faker()->dateTime(),
-            'email' => self::faker()->email(),
+            'email' => self::faker()->unique()->email(),
             'login' => $login,
             // Set nickname attribute to login or random string
             'nickname' => self::faker()->boolean() ? $login : self::faker()->unique()->text(20),

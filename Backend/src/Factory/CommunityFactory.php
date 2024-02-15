@@ -29,12 +29,9 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class CommunityFactory extends ModelFactory
 {
-    private const STATUS_OPTIONS  = ['public', 'private', 'restricted'];
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
      */
     public function __construct()
     {
@@ -43,16 +40,18 @@ final class CommunityFactory extends ModelFactory
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     *
-     * @todo add your default values here
      */
     protected function getDefaults(): array
     {
         return [
-            'name' => self::faker()->text(40),
+            'name' => self::faker()->unique()->text(rand(5, 21)),
             'description' => self::faker()->paragraph(),
             'sendWelcomeMessage' => self::faker()->boolean(),
-            'status' => self::faker()->randomElement(self::STATUS_OPTIONS),
+            'status' => self::faker()->randomElement([
+                Community::STATUS_COMMU_PRIVATE,
+                Community::STATUS_COMMU_RESTRICTED,
+                Community::STATUS_COMMU_PUBLIC
+            ]),
             'creator' => UserFactory::new(),
         ];
     }
