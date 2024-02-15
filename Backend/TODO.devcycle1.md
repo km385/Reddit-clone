@@ -23,6 +23,7 @@
 |                           | Testing Pull Requests                         | ✅ Done            |
 |                           | Verifying Connection Between Frontend & Backend | ✅ Done   |
 |                           | Implementing Workflows                        | ⭕ Not Started    |
+|                           | Establishing License for project               | ⭕ Not Started    |
 | Setting up the application |                                       |  ❌ -Incomplete- ❌   |
 |                          | Setting up Symfony framework          | ✅ Done          |
 |                          | Setting up Docker environment         | ✅ Done          |
@@ -31,13 +32,14 @@
 |                          | Setting up Mercury                    | ⭕ Not Started   |
 |                          | Moving Secrets from .env              | ⭕ Not Started  |
 |                          | Optimize Docker Image                 | ⭕ Not Started  |
+|                          | Deal with all deprications            | ⭕ Not Started  |
 | User Table              |                               |  ❌ -Incomplete- ❌ |
 |                          | Implementing `Users` entity           | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
 |                          | Hashing Passwords                     | ✅ Done          |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
-|                          | Adding Embed                          | 🚀 Upcoming  |
+|                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ✅ Done  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
@@ -51,7 +53,7 @@
 |                          | Change Owner to Creator               | ✅ Done  |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
-|                          | Adding Embed                          | 🚀 Upcoming  |
+|                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ✅ Done  |
 |                          | Securing Requests                       | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
@@ -66,41 +68,21 @@
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
-| Post Table                 |                        | ❌ -Incomplete- ❌|
-|                          | Implementing `Posts` entity            | ⭕ Not Started  |
-|                          | Adding status                           | ⭕ Not Started          |
-|                          | Adding Image Posts               | ⭕ Not Started   |
-|                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Filtrations                    | ⭕ Not Started  |
-|                          | Adding Normalization Groups           | ⭕ Not Started  |
+| Thread (Post) Table      |                        | ❌ -Incomplete- ❌|
+|                          | Implementing `Posts` entity            | ⏳ In Progress  |
+|                          | Adding status                           | ⏳ In Progress          |
+|                          | Adding Image Posts               | ⏳ In Progress   |
+|                          | Adding Necessary Fields               | ⏳ In Progress  |
+|                          | Adding Filtrations                    | ⏳ In Progress  |
+|                          | Adding Normalization Groups           | ⏳ In Progress  |
 |                          | Adding Embed                          | ⭕ Not Started  |
-|                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Securing Requests              | ⭕ Not Started  |
-|                          | Debugging                             | ⭕ Not Started  |
-|                          | Tests                             | ⭕ Not Started  |
-| _-_ Table (Post-Commu) |                        | ❌ -Incomplete- ❌|
-|                          | Implementing `-` entity            | ⭕ Not Started  |
-|                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Filtrations                    | ⭕ Not Started  |
-|                          | Adding Normalization Groups           | ⭕ Not Started  |
-|                          | Adding Embed                          | ⭕ Not Started  |
-|                          | Adding Factory                        | ⭕ Not Started  |
+|                          | Adding Factory                        | ⏳ In Progress  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Comment Table            |                             | ❌ -Incomplete- ❌|
 |                          | Implementing `Comments` entity            | ⭕ Not Started  |
 |                          | Adding status                           | ⭕ Not Started    |
-|                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Filtrations                    | ⭕ Not Started  |
-|                          | Adding Normalization Groups           | ⭕ Not Started  |
-|                          | Adding Embed                          | ⭕ Not Started  |
-|                          | Adding Factory                        | ⭕ Not Started  |
-|                          | Securing Requests              | ⭕ Not Started  |
-|                          | Debugging                             | ⭕ Not Started  |
-|                          | Tests                             | ⭕ Not Started  |
-| _-_ Table (Comment-Post) |                         | ❌ -Incomplete- ❌|
-|                          | Implementing `-` entity            | ⭕ Not Started  |
 |                          | Adding Necessary Fields               | ⭕ Not Started  |
 |                          | Adding Filtrations                    | ⭕ Not Started  |
 |                          | Adding Normalization Groups           | ⭕ Not Started  |
