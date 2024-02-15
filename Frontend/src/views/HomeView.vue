@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import TextPost from "@/components/TextPost.vue";
-import CreatePost from "@/components/CreatePost.vue";
-import HomeCommunity from "@/components/HomeCommunity.vue";
 import axios from "axios";
+import SideFeed from "@/components/SideFeed.vue";
+import RowComponent from "@/components/RowComponent.vue";
 
 async function getRequest() {
 
@@ -27,10 +27,6 @@ async function getRequest() {
         });
 }
 
-
-
-
-
 async function postRequest() {
     console.log('post request')
 
@@ -50,9 +46,32 @@ async function postRequest() {
 <template>
     <main class="text-white mt-12">
         <div class="flex justify-center gap-4">
-            <div class="flex flex-col gap-4 items-center">
-                <CreatePost />
+            <div class="flex flex-col border-r border-[#242c2e] h-full">
 
+                <div class="w-60 flex flex-col gap-4">
+
+                    <div>
+                        <div v-for="n in 3" :key="n">
+                            <RowComponent />
+                        </div>
+                    </div>
+
+                    <hr class="border-[#242c2e]">
+                    <SideFeed name="CUSTOM FEEDS"/>
+
+                    <hr class="border-[#242c2e]">
+                    <SideFeed name="RECENT"/>
+
+                    <hr class="border-[#242c2e]">
+                    <SideFeed name="COMMUNITIES"/>
+
+                    <hr class="border-[#242c2e]">
+                    <SideFeed name="RESOURCES"/>
+
+                </div>
+
+            </div>
+            <div class="flex flex-col gap-4 items-center">
 
                 <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>
                 <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
@@ -66,13 +85,11 @@ async function postRequest() {
 
             </div>
 
-            <div class="lg:flex-col gap-4 hidden lg:flex">
-                <HomeCommunity />
-                <div class="w-[340px] flex flex-col rounded-md border border-gray-600 bg-[#1a1a1b]">
 
-                </div>
+
             </div>
-        </div>
+
 
     </main>
 </template>
+

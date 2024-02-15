@@ -18,7 +18,7 @@ import IconUser from "@/components/icons/IconUser.vue";
                 <SearchBar class="w-3/5"/>
             </div>
 
-            <div class="flex">
+            <div class="flex gap-2">
                 <NavBarIcons/>
                 <icon-user class="w-6 "/>
             </div>
