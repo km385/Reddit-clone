@@ -12,7 +12,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Put;
 use App\Repository\CommunityRepository;
-use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -29,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommunityRepository::class)]
 #[ApiResource(
-    description: "A community of users containing posts from given theme.",
+    description: "Represents a community of users, containing posts from given topics.",
     shortName: "Commu",
     operations: [
         // new Get,
@@ -49,6 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     paginationItemsPerPage: 25,
 )]
+//TODO: Make custom filter for status
 #[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'numberOfUsers'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'status' => 'exact', 'name' => 'ipartial', 'desciption' => 'ipartial'])]
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
@@ -57,9 +57,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['name'], message: 'There is already a community with this name')]
 class Community
 {
-    const STATUS_PUBLIC = 'public';
-    const STATUS_PRIVATE = 'private';
-    const STATUS_RESTRICTED = 'restricted';
+    /**
+     * Constants representing statuses for communities:
+     * - STATUS_COMMU_PUBLIC: Anyone can view, post, and comment to this community.
+     */
+    const STATUS_COMMU_PUBLIC = 'public';
+
+    /**
+     * STATUS_COMMU_PRIVATE: Anyone can view, but only approved users can contribute.
+     */
+    const STATUS_COMMU_PRIVATE = 'private';
+
+    /**
+     * STATUS_COMMU_RESTRICTED: Only approved users can view and submit to this community.
+     */
+    const STATUS_COMMU_RESTRICTED = 'restricted';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -67,9 +79,9 @@ class Community
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 100, maxMessage: 'Community name should be between 3 and 100 characters long')]
-    #[Groups(['community:read', 'community:write', 'community:create'])]
-    #[ORM\Column(length: 100, unique: true)]
+    #[Assert\Length(min: 3, max: 21, maxMessage: 'Community name should be between 3 and 21 characters long')]
+    #[Groups(['community:read', 'community:write', 'community:create', 'post:read'])]
+    #[ORM\Column(length: 21, unique: true)]
     private ?string $name = null;
 
     #[Assert\Length(min: 0, max: 500, maxMessage: 'Community description should be between 0 and 500 characters long')]
@@ -85,9 +97,9 @@ class Community
         pattern: '/^(public|restricted|private)$/',
         message: 'The status must be "public", "restricted", or "private".'
     )]
-    #[Groups(['community:read', 'community:write', 'community:create'])]
+    #[Groups(['community:read', 'community:write', 'community:create', 'post:read'])]
     #[ORM\Column(length: 10)]
-    private ?string $status = self::STATUS_PUBLIC;
+    private ?string $status = self::STATUS_COMMU_PUBLIC;
 
     #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column]
@@ -102,10 +114,15 @@ class Community
     #[ORM\OneToMany(mappedBy: 'community', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $members;
 
+    #[Groups(['community:read', 'community:write'])]
+    #[ORM\OneToMany(mappedBy: 'community', targetEntity: Thread::class, orphanRemoval: true)]
+    private Collection $posts;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->members = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,7 +189,7 @@ class Community
      */
     public function setStatus(string $status): static
     {
-        $allowedStatuses = [self::STATUS_PRIVATE, self::STATUS_PUBLIC, self::STATUS_RESTRICTED];
+        $allowedStatuses = [self::STATUS_COMMU_PRIVATE, self::STATUS_COMMU_PUBLIC, self::STATUS_COMMU_RESTRICTED];
 
         if (!in_array($status, $allowedStatuses)) {
             throw new \InvalidArgumentException("Invalid status provided: $status, accepted values are: " . implode(", ", $allowedStatuses));
@@ -237,6 +254,36 @@ class Community
                 $member->setCommunity(null);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Thread>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Thread $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setCommunity($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Thread $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getCommunity() === $this) {
+                $post->setCommunity(null);
+            }
+        }
+
         return $this;
     }
 }

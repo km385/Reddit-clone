@@ -48,8 +48,9 @@
 |                          | Implementing `Communities` entity     | ✅ Done          |
 |                          | Adding status                           | ✅ Done          |
 |                          | Adding Necessary Fields               | ✅ Done  |
-|                          | Making Amount of Members Change Dynamically| ✅ Done  |
+|                          | Making Amount of Members Change Dynamically| ✅ Done |
 |                          | Make Owner Automatically Become Member| ✅ Done  |
+|                          | Add Approving Members For Private & Restricted Communites  | ⭕ Not Started  |
 |                          | Change Owner to Creator               | ✅ Done  |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
@@ -69,14 +70,14 @@
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Thread (Post) Table      |                        | ❌ -Incomplete- ❌|
-|                          | Implementing `Posts` entity            | ⏳ In Progress  |
-|                          | Adding status                           | ⏳ In Progress          |
-|                          | Adding Image Posts               | ⏳ In Progress   |
-|                          | Adding Necessary Fields               | ⏳ In Progress  |
-|                          | Adding Filtrations                    | ⏳ In Progress  |
-|                          | Adding Normalization Groups           | ⏳ In Progress  |
-|                          | Adding Embed                          | ⭕ Not Started  |
-|                          | Adding Factory                        | ⏳ In Progress  |
+|                          | Implementing `Posts` entity            | ✅ Done  |
+|                          | Adding status                           | ✅ Done          |
+|                          | Adding diffrent type of Posts               | ✅ Done   |
+|                          | Adding Necessary Fields               | ✅ Done  |
+|                          | Adding Filtrations                    | ✅ Done  |
+|                          | Adding Normalization Groups           | ✅ Done  |
+|                          | Adding Embed                          | ✅ Done  |
+|                          | Adding Factory                        | ✅ Done  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
@@ -103,3 +104,4 @@
 
 ## Notes:
 - Remove Carbon if not needed
+- Consider adding isModified flag to Posts and Comments

@@ -7,33 +7,34 @@ use Doctrine\Persistence\ObjectManager;
 use App\Factory\UserFactory;
 use App\Factory\CommunityFactory;
 use App\Factory\MembershipFactory;
+use App\Factory\ThreadFactory;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
 
-        // Create 200 random users
-        UserFactory::createMany(200);
-        echo "> Info: 200 User entities sucesfully created.\n";
+        // Create 100 random users
+        UserFactory::createMany(100);
+        echo "   > Info: 100 User entities sucesfully created.\n";
 
-        // Create 15 communities created by some one the users
-        CommunityFactory::createMany(15, function () {
+        // Create 10 communities created by some one the users
+        CommunityFactory::createMany(10, function () {
             return [
                 'creator' => UserFactory::random(),
             ];
         });
-        echo "> Info: 15 Community entities sucesfully created.\n";
+        echo "   > Info: 10 Community entities sucesfully created.\n";
 
         /**
-         * Generate 500 random memberships with a limit on consecutive attempts.
+         * Generate 250 random memberships with a limit on consecutive attempts.
          * If max consecutive attempts are reached, duplicates will be allowed.
          */
         $existing_pairs = array();
-        $max_attempts = 1000;
+        $max_attempts = 500;
         $allow_dublicate = false;
 
-        MembershipFactory::createMany(500, function () use (&$existing_pairs, $max_attempts, &$allow_dublicate) {
+        MembershipFactory::createMany(250, function () use (&$existing_pairs, $max_attempts, &$allow_dublicate) {
             $attemps = 0;
 
             while (!$allow_dublicate) {
@@ -59,6 +60,19 @@ class AppFixtures extends Fixture
                 'member' => UserFactory::random(),
             ];
         });
-        echo "> Info: 500 Membership entities sucesfully created.\n";
+        echo "   > Info: 250 Membership entities sucesfully created.\n";
+
+        /**
+         * Generate 300 random posts based on previously generated memberships.
+         */
+        ThreadFactory::createMany(300, function () {
+            $membership = MembershipFactory::random();
+            return [
+                'author' => $membership->getMember(),
+                'community' => $membership->getCommunity(),
+            ];
+        });
+        echo "   > Info: 300 Post entities sucesfully created.\n";
+
     }
 }
