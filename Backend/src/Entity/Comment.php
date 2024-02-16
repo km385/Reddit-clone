@@ -109,7 +109,8 @@ class Comment
 
     #[Groups(['comment:read', 'post:read','user:read'])]
     #[ORM\OneToMany(mappedBy: 'parentComment', targetEntity: self::class)]
-    #[MaxDepth(4)]
+    #[MaxDepth(2)]
+    //TODO: find solution for depth not working for same calss objects
     private Collection $childComments;
 
     #[Groups(['comment:read','comment:create','post:read'])]
