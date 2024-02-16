@@ -58,7 +58,7 @@ use Doctrine\ORM\Mapping as ORM;
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity('nickname')]
+
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[UniqueEntity(fields: ['nickname'], message: 'There is already an account with this nickname')]
 #[UniqueEntity(fields: ['login'], message: 'There is already an account with this login')]
