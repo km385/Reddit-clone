@@ -9,7 +9,7 @@ import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
 </script>
 
 <template>
-    <div class="max-w-[600px] hover:bg-hover-light rounded-xl cursor-pointer">
+    <div class="max-w-[700px] hover:bg-hover-light rounded-xl cursor-pointer">
 
         <div class="rounded-r-md grow flex flex-col *:mx-4">
             <div class="text-sm mt-2 flex items-center gap-1">

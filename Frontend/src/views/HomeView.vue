@@ -41,29 +41,52 @@ async function postRequest() {
     console.log(res.data)
 }
 
+const subreddits = [
+    "AskReddit",
+    "funny",
+    "todayilearned",
+    "worldnews",
+    "pics",
+    "gaming",
+    "aww",
+    "videos",
+    "movies",
+    "science",
+    "technology",
+    "music",
+    "news",
+    "books",
+    "history",
+    "food",
+    "sports",
+    "art",
+    "DIY",
+    "fitness"
+];
+
 </script>
 
 <template>
     <main class="text-white mt-12">
-        <div class="flex justify-center gap-4">
-            <div class="flex flex-col border-r border-[#242c2e] h-full">
+        <div class="flex gap-4 justify-center">
+            <div class="z-20 bg-main-bg hidden xl:block">
 
-                <div class="w-60 flex flex-col gap-4">
+                <div class="w-60 flex flex-col gap-4 select-none border-r border-[#242c2e] sticky top-16 overflow-hidden hover:overflow-y-scroll h-screen">
 
                     <div>
                         <div v-for="n in 3" :key="n">
-                            <RowComponent />
+                            <RowComponent :name="subreddits[n]" />
                         </div>
                     </div>
 
                     <hr class="border-[#242c2e]">
-                    <SideFeed name="CUSTOM FEEDS"/>
+                    <SideFeed name="CUSTOM FEEDS" :has-favorite-icon="true"/>
 
                     <hr class="border-[#242c2e]">
                     <SideFeed name="RECENT"/>
 
                     <hr class="border-[#242c2e]">
-                    <SideFeed name="COMMUNITIES"/>
+                    <SideFeed name="COMMUNITIES" :has-favorite-icon="true"/>
 
                     <hr class="border-[#242c2e]">
                     <SideFeed name="RESOURCES"/>
@@ -77,17 +100,19 @@ async function postRequest() {
                 <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
 
 
-                <div v-for="n in 5" :key="n">
+                <div v-for="n in 20" :key="n">
                     <router-link :to="`/r/${n}/comments/${n}`">
                         <TextPost />
                     </router-link>
                 </div>
 
             </div>
+            <div class="w-60 hidden xl:block" >
+                <div class="w-60 flex flex-col gap-4 select-none sticky top-16 h-screen">
 
-
-
+                </div>
             </div>
+        </div>
 
 
     </main>
