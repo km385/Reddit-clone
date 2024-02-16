@@ -8,40 +8,45 @@ use App\Factory\UserFactory;
 use App\Factory\CommunityFactory;
 use App\Factory\MembershipFactory;
 use App\Factory\ThreadFactory;
+use App\Factory\CommentFactory;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
 
-        // Create 100 random users
-        UserFactory::createMany(100);
-        echo "   > Info: 100 User entities sucesfully created.\n";
+        // Create 50 random users
+        $numberOf = 50;
+        UserFactory::createMany($numberOf);
+        echo "   > $numberOf User entities successfully created.\n";
 
-        // Create 10 communities created by some one the users
-        CommunityFactory::createMany(10, function () {
+        // Create 5 communities created by some one the users
+        $numberOf = 5;
+        $communities = CommunityFactory::createMany($numberOf, function () {
             return [
                 'creator' => UserFactory::random(),
             ];
         });
-        echo "   > Info: 10 Community entities sucesfully created.\n";
+        $numberOf = count($communities);
+        echo "   > $numberOf Community entities successfully created.\n";
 
         /**
-         * Generate 250 random memberships with a limit on consecutive attempts.
+         * Generate 100 random memberships with a limit on consecutive attempts.
          * If max consecutive attempts are reached, duplicates will be allowed.
          */
         $existing_pairs = array();
-        $max_attempts = 500;
-        $allow_dublicate = false;
+        $max_attempts = 250;
+        $allow_duplicate = false;
+        $numberOfMemberships = 100; 
 
-        MembershipFactory::createMany(250, function () use (&$existing_pairs, $max_attempts, &$allow_dublicate) {
-            $attemps = 0;
+        MembershipFactory::createMany($numberOfMemberships, function () use (&$existing_pairs, $max_attempts, &$allow_duplicate) {
+            $attempts = 0;
 
-            while (!$allow_dublicate) {
+            while (!$allow_duplicate) {
                 $user = UserFactory::random();
                 $community = CommunityFactory::random();
                 $id = $user->getId() . $community->getId();
-                $attemps++;
+                $attempts++;
                 if (!in_array($id, $existing_pairs) && $community->getCreator()->getId() !== $user->getId()) {
                     array_push($existing_pairs, $id);
                     return [
@@ -49,30 +54,39 @@ class AppFixtures extends Fixture
                         'member' => $user,
                     ];
                 }
-                if ($attemps > $max_attempts) {
+                if ($attempts > $max_attempts) {
                     echo "Warning: Max attempts reached. " . count($existing_pairs) . " Memberships have been created. Rest will allow duplicates.";
-                    $allow_dublicate = true;
+                    $allow_duplicate = true;
                 }
             }
-
+            // The case where duplicates are allowed 'cuz max attempts have been reached
             return [
                 'community' => CommunityFactory::random(),
                 'member' => UserFactory::random(),
             ];
         });
-        echo "   > Info: 250 Membership entities sucesfully created.\n";
+        echo "   > $numberOfMemberships Membership entities successfully created.\n";
 
-        /**
-         * Generate 300 random posts based on previously generated memberships.
-         */
-        ThreadFactory::createMany(300, function () {
+        // Generate 200 random posts based on previously generated memberships.
+        $numberOf = 200; 
+        ThreadFactory::createMany($numberOf, function () {
             $membership = MembershipFactory::random();
             return [
                 'author' => $membership->getMember(),
                 'community' => $membership->getCommunity(),
             ];
         });
-        echo "   > Info: 300 Post entities sucesfully created.\n";
+        echo "   > $numberOf Post entities sucesfully created.\n";
 
+        // Generate 400 random comments.
+        //TODO: look into making comments generation fit the right communities without overloading memory
+        $numberOf = 400; 
+        CommentFactory::createMany($numberOf, function () {
+            return [
+                'author' => UserFactory::random(),
+                'post' => ThreadFactory::random(),
+            ];
+        });
+        echo "   > $numberOf Comments entities sucesfully created.\n";
     }
 }
