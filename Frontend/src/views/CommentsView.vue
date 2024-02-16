@@ -17,15 +17,15 @@ function goBack() {
 </script>
 
 <template>
-    <div class="bg-gray-600/30" @click.self="goBack">
+    <div class="max-w-[700px]" @click.self="goBack">
 
-        <div class=" w-4/5 mx-auto py-2 bg-black ">
-            <CommentsNavBar/>
-            <div class="mx-20 flex flex-col mt-10 mr-[400px] bg-[#1a1a1b] rounded-md">
+        <div class="py-2">
+<!--            <CommentsNavBar/>-->
+            <div class=" flex flex-col mt-10 bg-main-bg rounded-md">
                 <CommentsMainContent/>
 
 
-                <div class="text-white mx-12">
+                <div class="text-white mt-10 mx-12">
                     <CommentsTextArea/>
 
 

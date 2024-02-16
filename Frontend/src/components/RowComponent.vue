@@ -3,7 +3,7 @@
 import IconUser from "@/components/icons/IconUser.vue";
 import IconStar from "@/components/icons/IconStar.vue";
 import {ref} from "vue";
-import IconStarFill from "@/views/IconStarFill.vue";
+import IconStarFill from "@/components/icons/IconStarFill.vue";
 
 const props = defineProps({
     hasFavoriteIcon: {
