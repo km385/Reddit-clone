@@ -119,13 +119,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:write', 'user:create'])]
     private ?string $plainPassword = null;
 
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read'])]
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $joinedCommunities;
 
     #[Groups(['user:read', 'user:write'])]
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Thread::class)]
     private Collection $posts;
+
+    #[Groups(['user:read'])]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
+    private Collection $comments;
 
     public function __construct()
     {
@@ -135,6 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->posts = new ArrayCollection();
         // guarantee every user at least has ROLE_USER
         $this->roles[] = 'ROLE_USER';
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -340,6 +345,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($post->getAuthor() === $this) {
                 $post->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
 

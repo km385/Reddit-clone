@@ -82,13 +82,12 @@
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Comment Table            |                             | ❌ -Incomplete- ❌|
-|                          | Implementing `Comments` entity            | ⭕ Not Started  |
-|                          | Adding status                           | ⭕ Not Started    |
-|                          | Adding Necessary Fields               | ⭕ Not Started  |
-|                          | Adding Filtrations                    | ⭕ Not Started  |
-|                          | Adding Normalization Groups           | ⭕ Not Started  |
-|                          | Adding Embed                          | ⭕ Not Started  |
-|                          | Adding Factory                        | ⭕ Not Started  |
+|                          | Implementing `Comments` entity            | ✅ Done  |
+|                          | Adding Necessary Fields               | ✅ Done  |
+|                          | Adding Filtrations                    | ✅ Done  |
+|                          | Adding Normalization Groups           | ✅ Done  |
+|                          | Adding Embed                          | ✅ Done  |
+|                          | Adding Factory                        | ✅ Done  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
@@ -104,4 +103,3 @@
 
 ## Notes:
 - Remove Carbon if not needed
-- Consider adding isModified flag to Posts and Comments

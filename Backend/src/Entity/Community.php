@@ -29,7 +29,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CommunityRepository::class)]
 #[ApiResource(
     description: "Represents a community of users, containing posts from given topics.",
-    shortName: "Commu",
+    //TODO: replace with sub reddit 
+    shortName: "Reddit",
     operations: [
         // new Get,
         new GetCollection,
@@ -101,6 +102,7 @@ class Community
     #[ORM\Column(length: 10)]
     private ?string $status = self::STATUS_COMMU_PUBLIC;
 
+    //TODO: add string messege body 
     #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column]
     private ?bool $sendWelcomeMessage = false;
