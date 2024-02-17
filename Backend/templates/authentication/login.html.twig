@@ -7,7 +7,6 @@
 </head>
 <body>
     <h1>Send JSON POST Request</h1>
-    TODO: Remove when not needed
     <form id="jsonForm">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
@@ -17,20 +16,18 @@
         
         <button type="button" onclick="sendJson()">Send</button>
     </form>
+    <br><br><br>
+    <div id="result"></div><br>
+    <div id="response"></div>
 
     <script>
         function sendJson() {
-            // Get username and password values from the form
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
-            // Data to be sent
             const data = {
                 username: username,
                 password: password
             };
-
-            // URL to send the request to
             const url = 'login_json';
 
             // Send the JSON POST request
@@ -43,17 +40,19 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Failed with status ' + response.status);
                 }
                 return response.json();
             })
             .then(data => {
                 console.log('Response:', data);
-                // Handle the response data as needed
+                document.getElementById('result').innerText = 'Login Successful';
+                document.getElementById('response').innerHTML = '<strong>Token:</strong> ' + data.token + '<br><strong>User:</strong> ' + data.user;
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
-                // Handle errors appropriately
+                document.getElementById('result').innerText = 'Login Failed: ' + error.message; 
+                document.getElementById('response').innerHTML = "";
             });
         }
     </script>
