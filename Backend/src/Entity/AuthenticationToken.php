@@ -27,10 +27,16 @@ class AuthenticationToken
     #[ORM\JoinColumn(nullable: false)]
     private ?User $ownedBy = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $userAddress = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $userAgent = null;
+
     public function __construct(string $tokenType = self::PREFIX_PERSONAL_ACCESS_TOKEN)
     {
         // $this->createdAt = new \DateTime();
-        $this->token = $tokenType.bin2hex(random_bytes(32));
+        $this->token = $tokenType . bin2hex(random_bytes(32));
     }
 
     public function getId(): ?int
@@ -85,4 +91,42 @@ class AuthenticationToken
 
         return $this;
     }
+    /**
+     * Validates expiration date of the token.
+     *
+     * @return bool True if date is future or null, false otherwise
+     */
+    public function isValid(): bool
+    {
+        if ($this->expiresAt === null) {
+            return true;
+        }
+
+        return $this->expiresAt > new \DateTimeImmutable();
+    }
+
+    public function getUserAddress(): ?string
+    {
+        return $this->userAddress;
+    }
+
+    public function setUserAddress(string $userAddress): static
+    {
+        $this->userAddress = $userAddress;
+
+        return $this;
+    }
+
+    public function getUserAgent(): ?string
+    {
+        return $this->userAgent;
+    }
+
+    public function setUserAgent(string $userAgent): static
+    {
+        $this->userAgent = $userAgent;
+
+        return $this;
+    }
+
 }

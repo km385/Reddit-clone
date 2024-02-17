@@ -43,15 +43,16 @@ final class AuthenticationTokenFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        // Generate a random number of days between -5 and 5
-        $randomDays = random_int(-5, 5);
-        $expiresAt = CarbonImmutable::now()->addDays($randomDays);
-
-        return [
-            'ownedBy' => UserFactory::new(),
-            'expiresAt' => $expiresAt,
-        ];
-    }
+    // Generate a random number of days between -5 and 5
+    $randomDays = random_int(-5, 5);
+    $operator = $randomDays >= 0 ? '+' : '';
+    $expiresAt = new \DateTimeImmutable("$operator$randomDays days");
+    
+    return [
+        'ownedBy' => UserFactory::new(),
+        'expiresAt' => $expiresAt,
+    ];
+}
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization

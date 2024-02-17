@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use App\Entity\User;
+use App\Entity\AuthenticationToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AuthenticationController extends AbstractController
 {
@@ -28,30 +31,38 @@ class AuthenticationController extends AbstractController
         ]);
     }
 
-
     #[Route(
         path: '/login_json',
         name: 'json_app_login',
         methods: ['POST'],
     )]
-    public function loginJson(IriConverterInterface $ireConverter, #[CurrentUser] ?User $user): Response
+    public function loginJson(#[CurrentUser] ?User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-        if ($user === null) {
-            return $this->json([
-                'message' => 'missing credentials',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
 
-        // return new Response(null, 204, [
-        //     'Location' => $ireConverter->getIriFromResource($user),
-        // ]);
+        $userIp = $request->getClientIp();
+        $userAgent = $request->headers->get('User-Agent');
+
+        if ($user === null) {
+            return $this->json(
+                [
+                    'message' => 'missing credentials',
+                ],
+                Response::HTTP_UNAUTHORIZED
+            );
+        }
+        //TODO: ADD remember me boolean
+        $authenticationToken = (new AuthenticationToken())
+        ->setOwnedBy($user)
+        ->setUserAgent($userAgent)
+        ->setUserAddress($userIp)
+        ->setExpiresAt(new \DateTimeImmutable('+6 hour'));
+
+        $entityManager->persist($authenticationToken);
+        $entityManager->flush();
+
         return $this->json([
-            'user' => $ireConverter->getIriFromResource($user),
+            'token' => $authenticationToken->getToken(),
+            'user' => $user->getUserIdentifier(),
         ]);
-        // $token = "...";
-        // return $this->json([
-        //     'user' => $user->getId(),
-        //     'token' => $token,
-        // ]);
     }
 }
