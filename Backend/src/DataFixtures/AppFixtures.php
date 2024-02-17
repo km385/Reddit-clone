@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\AuthenticationTokenFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Factory\UserFactory;
@@ -78,9 +79,9 @@ class AppFixtures extends Fixture
         });
         echo "   > $numberOf Post entities sucesfully created.\n";
 
-        // Generate 400 random comments.
+        // Generate 200 random comments.
         //TODO: look into making comments generation fit the right communities without overloading memory
-        $numberOf = 400; 
+        $numberOf = 200; 
         CommentFactory::createMany($numberOf, function () {
             return [
                 'author' => UserFactory::random(),
@@ -88,5 +89,14 @@ class AppFixtures extends Fixture
             ];
         });
         echo "   > $numberOf Comments entities sucesfully created.\n";
+
+        // Generate 50 authentication tokens.
+        $numberOf = 50; 
+        AuthenticationTokenFactory::createMany($numberOf, function () {
+            return [
+                'ownedBy' => UserFactory::random(),
+            ];
+        });
+        echo "   > $numberOf AuthenticationTokens entities sucesfully created.\n";
     }
 }

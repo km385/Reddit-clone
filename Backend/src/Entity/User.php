@@ -131,6 +131,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: AuthenticationToken::class, orphanRemoval: true)]
+    private Collection $authenticationTokens;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -140,6 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $this->roles[] = 'ROLE_USER';
         $this->comments = new ArrayCollection();
+        $this->authenticationTokens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -375,6 +379,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AuthenticationToken>
+     */
+    public function getAuthenticationTokens(): Collection
+    {
+        return $this->authenticationTokens;
+    }
+
+    public function addAuthenticationToken(AuthenticationToken $authenticationToken): static
+    {
+        if (!$this->authenticationTokens->contains($authenticationToken)) {
+            $this->authenticationTokens->add($authenticationToken);
+            $authenticationToken->setOwnedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthenticationToken(AuthenticationToken $authenticationToken): static
+    {
+        if ($this->authenticationTokens->removeElement($authenticationToken)) {
+            // set the owning side to null (unless already changed)
+            if ($authenticationToken->getOwnedBy() === $this) {
+                $authenticationToken->setOwnedBy(null);
             }
         }
 
