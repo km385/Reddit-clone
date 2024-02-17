@@ -51,12 +51,14 @@
 |                          | Making Amount of Members Change Dynamically| ✅ Done |
 |                          | Make Owner Automatically Become Member| ✅ Done  |
 |                          | Add Approving Members For Private & Restricted Communites  | ⭕ Not Started  |
+|                          | Replace Communites with subreddits    | ⭕ Not Started  |
 |                          | Change Owner to Creator               | ✅ Done  |
 |                          | Adding Filtrations                    | ✅ Done  |
 |                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | ⭕ Not Started  |
 |                          | Adding Factory                        | ✅ Done  |
-|                          | Securing Requests                       | ⭕ Not Started  |
+|                          | Securing Requests                     | ⭕ Not Started  |
+|                          | Making Community subresource           | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
@@ -78,6 +80,7 @@
 |                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | ✅ Done  |
 |                          | Adding Factory                        | ✅ Done  |
+|                          | Making Posts subresource           | ⭕ Not Started  |
 |                          | Securing Requests              | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
@@ -88,12 +91,13 @@
 |                          | Adding Normalization Groups           | ✅ Done  |
 |                          | Adding Embed                          | ✅ Done  |
 |                          | Adding Factory                        | ✅ Done  |
-|                          | Securing Requests              | ⭕ Not Started  |
+|                          | Making Comments subresource           | ⭕ Not Started  |
+|                          | Securing Requests                     | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | User Authentication |                            | ❌ -Incomplete- ❌|
-|                          | Adding JWT token               | ⭕ Not Started|
-|                          | Request Logging Mechanism      | ⭕ Not Started|
+|                          | Request Logging Mechanism      | ✅ Done|
+|                          | Adding token generation        | ⭕ Not Started|
 |                          | Securing All Routes            | ⭕ Not Started|
 |                          | Tests                          | ⭕ Not Started|
 | File (Images) Upload |                             | ❌ -Incomplete- ❌|
@@ -103,3 +107,4 @@
 
 ## Notes:
 - Remove Carbon if not needed
+- Consider replacing Session token with JWT
