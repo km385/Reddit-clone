@@ -38,9 +38,7 @@ class AuthenticationController extends AbstractController
     )]
     public function loginJson(#[CurrentUser] ?User $user, EntityManagerInterface $entityManager, Request $request): Response
     {
-
         $userIp = $request->getClientIp();
-        $userAgent = $request->headers->get('User-Agent');
 
         if ($user === null) {
             return $this->json(
@@ -50,11 +48,10 @@ class AuthenticationController extends AbstractController
                 Response::HTTP_UNAUTHORIZED
             );
         }
-        //TODO: ADD remember me boolean
         $authenticationToken = (new AuthenticationToken())
         ->setOwnedBy($user)
-        ->setUserAgent($userAgent)
         ->setUserAddress($userIp)
+        //TODO: ADD remember me boolean and null as expiration
         ->setExpiresAt(new \DateTimeImmutable('+6 hour'));
 
         $entityManager->persist($authenticationToken);

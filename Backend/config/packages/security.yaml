@@ -21,8 +21,8 @@ security:
                 check_path: json_app_login
 
             access_token:
-                token_extractors: header 
-                # token_extractors: App\Security\AuthenticationTokenExtractor
+                # token_extractors: header 
+                token_extractors: App\Security\AuthenticationTokenExtractor
                 token_handler: App\Security\AuthenticationTokenHandler
 
                 
