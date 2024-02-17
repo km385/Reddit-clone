@@ -96,8 +96,8 @@
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                             | ⭕ Not Started  |
 | User Authentication |                            | ❌ -Incomplete- ❌|
-|                          | Request Logging Mechanism      | ✅ Done|
-|                          | Adding token generation        | ⭕ Not Started|
+|                          | Request Logging Mechanism      | ✅ Done |
+|                          | Adding token generation        | ✅ Done |
 |                          | Securing All Routes            | ⭕ Not Started|
 |                          | Tests                          | ⭕ Not Started|
 | File (Images) Upload |                             | ❌ -Incomplete- ❌|
@@ -106,5 +106,8 @@
 |                          | Tests                          | ⭕ Not Started|
 
 ## Notes:
-- Remove Carbon if not needed
+- Remove Carbon if not needed (
+    consider creating methods for returning human version of dates '5 months ago'
+)
 - Consider replacing Session token with JWT
+- In sec step add agent and ip to token validation

@@ -4,6 +4,11 @@ api_platform:
     show_webby: false
     formats:
         jsonld: ['application/ld+json']
+    swagger: 
+        api_keys:
+            access_token:
+                name: Authorization
+                type: header
     docs_formats:
         jsonld: ['application/ld+json']
         jsonopenapi: ['application/vnd.openapi+json']

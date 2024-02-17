@@ -91,12 +91,46 @@ class AuthenticationToken
 
         return $this;
     }
+
+    /**
+     * Check if the session is valid.
+     *
+     * @param string $userAddress The user's address.
+     * @param string $userAgent   The user's user agent.
+     *
+     * @return int Returns an integer code indicating the validity of the session:
+     *             - 0: Session is valid.
+     *             - 1: Session has expired.
+     *             - 2: User address does not match.
+     *             - 3: User agent does not match.
+     */
+    public function isValid(string $userAddress = "", string $userAgent = ""): int
+    {
+        // Check if remember me
+        if ($this->expiresAt !== null) {
+            // check if expired
+            if ($this->expiresAt <= new \DateTimeImmutable()) {
+                return 1;
+            }
+        }
+        //check if address same
+        if ($this->userAddress !== $userAddress) {
+            return 2;
+        }
+        //check if agent same
+        if ($this->userAgent !== $userAgent) {
+            return 3;
+        }
+
+        return 0;
+    }
+
     /**
      * Validates expiration date of the token.
      *
      * @return bool True if date is future or null, false otherwise
      */
-    public function isValid(): bool
+    public function isExpiresAtValid(): bool
     {
         if ($this->expiresAt === null) {
             return true;
