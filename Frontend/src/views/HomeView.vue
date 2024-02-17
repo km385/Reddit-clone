@@ -72,7 +72,7 @@ const router = useRouter()
 const route = useRoute()
 
 onMounted(() => {
-    if(route.name === 'comments') {
+    if(route.name !== '/') {
         isCommentSection.value = true
     } else {
         isCommentSection.value = false
@@ -95,7 +95,7 @@ router.beforeEach((to, from) => {
 
 <template>
     <main class="text-white mt-12">
-        <div class="flex gap-4 justify-center">
+        <div class="flex gap-16 justify-center">
             <div class="z-20 bg-main-bg hidden xl:block ">
 
                 <div class="w-60 flex flex-col gap-4 select-none border-r border-[#242c2e]
@@ -126,10 +126,12 @@ router.beforeEach((to, from) => {
 
                 <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>
                 <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
-
+                <router-link :to="{name: 'community', params: { community: 'livestreamfail'}}">
+                    <button class="bg-blue-500 rounded-md p-2">Community</button>
+                </router-link>
 
                 <div v-for="n in 20" :key="n">
-                    <router-link :to="`/r/${n}/comments/${n}`" >
+                    <router-link :to="{name: 'comments', params: {community: n, id: n}}" >
                         <TextPost />
                     </router-link>
                 </div>
@@ -139,11 +141,7 @@ router.beforeEach((to, from) => {
                 <router-view></router-view>
             </div>
 
-            <div class="w-60 hidden xl:block" >
-                <div class="w-60 flex flex-col gap-4 select-none sticky top-16 h-screen">
 
-                </div>
-            </div>
         </div>
 
 

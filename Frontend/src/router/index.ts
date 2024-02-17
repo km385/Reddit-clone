@@ -13,7 +13,12 @@ const router = createRouter({
           path: '/r/:community/comments/:id',
           name: 'comments',
           component: () => import('../views/CommentsView.vue')
-        }
+        },
+        {
+          path: '/r/:community/',
+          name: 'community',
+          component: () => import('../views/CommunityView.vue')
+        },
       ]
     },
     {

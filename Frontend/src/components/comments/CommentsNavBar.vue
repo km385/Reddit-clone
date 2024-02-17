@@ -23,7 +23,7 @@
 <script>
 import ArrowUpIcon from "@/components/icons/ArrowUpIcon.vue";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
-import XIcon from "@/components/icons/XIcon.vue";
+import XIcon from "@/components/icons/IconX.vue";
 
 export default {
     name: 'CommentsNavBar',
