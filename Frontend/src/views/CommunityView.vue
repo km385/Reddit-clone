@@ -4,11 +4,11 @@ import IconUser from "@/components/icons/IconUser.vue";
 </script>
 
 <template>
-    <div class="max-w-[800px]">
-        <div class="bg-red-500 z-30">
-            <img class="object-cover h-32" alt="banner" src="https://styles.redditmedia.com/t5_38jf0/styles/bannerBackgroundImage_0z3fqd7mkhra1.png">
+    <div class="w-full">
+        <div class="z-30">
+            <img class="object-cover h-32 w-full" alt="banner" src="https://styles.redditmedia.com/t5_38jf0/styles/bannerBackgroundImage_0z3fqd7mkhra1.png">
         </div>
-        <div class="h-16 flex justify-between px-3 relative bottom-8 z-20 bg-red-500">
+        <div class="h-16 flex justify-between px-3 relative bottom-8 z-20">
             <div class="flex gap-3">
                 <div class="flex">
                     <icon-user />
