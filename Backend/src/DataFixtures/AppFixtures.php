@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\AuthenticationTokenFactory;
+use App\Factory\AccessTokenFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Factory\UserFactory;
@@ -90,13 +90,13 @@ class AppFixtures extends Fixture
         });
         echo "   > $numberOf Comments entities sucesfully created.\n";
 
-        // Generate 50 authentication tokens.
+        // Generate 50 access tokens.
         $numberOf = 50; 
-        AuthenticationTokenFactory::createMany($numberOf, function () {
+        AccessTokenFactory::createMany($numberOf, function () {
             return [
                 'ownedBy' => UserFactory::random(),
             ];
         });
-        echo "   > $numberOf AuthenticationTokens entities sucesfully created.\n";
+        echo "   > $numberOf AccessTokens entities sucesfully created.\n";
     }
 }

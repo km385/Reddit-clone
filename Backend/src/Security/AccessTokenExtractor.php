@@ -5,8 +5,7 @@ namespace App\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenExtractorInterface;
 
-//TODO: remove unless needed
-class AuthenticationTokenExtractor implements AccessTokenExtractorInterface
+class AccessTokenExtractor implements AccessTokenExtractorInterface
 {
     private string $regex;
 
@@ -28,7 +27,6 @@ class AuthenticationTokenExtractor implements AccessTokenExtractorInterface
 
         if (preg_match($this->regex, $header, $matches)) {
             $userIp = $request->getClientIp();
-            //TODO: extract agent or better way to valdiate if browser was changed
             return $matches[1] . '|' . ($userIp!== null ? $userIp : '0');
         }
 

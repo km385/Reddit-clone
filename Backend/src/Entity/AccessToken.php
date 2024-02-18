@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AuthenticationTokenRepository;
+use App\Repository\AccessTokenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AuthenticationTokenRepository::class)]
-class AuthenticationToken
+#[ORM\Entity(repositoryClass: AccessTokenRepository::class)]
+class AccessToken
 {
     public const PREFIX_PERSONAL_ACCESS_TOKEN = 'rpa_';
     #[ORM\Id]

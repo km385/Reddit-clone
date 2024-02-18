@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
-use ApiPlatform\Api\IriConverterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use App\Entity\User;
-use App\Entity\AuthenticationToken;
+use App\Entity\AccessToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
-class AuthenticationController extends AbstractController
+class AccessController extends AbstractController
 {
     //TODO: remove
     #[Route(path: '/login', name: 'app_login')]
@@ -48,7 +47,7 @@ class AuthenticationController extends AbstractController
                 Response::HTTP_UNAUTHORIZED
             );
         }
-        $authenticationToken = (new AuthenticationToken())
+        $authenticationToken = (new AccessToken())
         ->setOwnedBy($user)
         ->setUserAddress($userIp)
         //TODO: ADD remember me boolean and null as expiration

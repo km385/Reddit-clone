@@ -131,8 +131,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: AuthenticationToken::class, orphanRemoval: true)]
-    private Collection $authenticationTokens;
+    #[ORM\OneToMany(mappedBy: 'ownedBy', targetEntity: AccessToken::class, orphanRemoval: true)]
+    private Collection $accessTokens;
 
     public function __construct()
     {
@@ -143,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $this->roles[] = 'ROLE_USER';
         $this->comments = new ArrayCollection();
-        $this->authenticationTokens = new ArrayCollection();
+        $this->accessTokens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -386,29 +386,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, AuthenticationToken>
+     * @return Collection<int, AccessToken>
      */
-    public function getAuthenticationTokens(): Collection
+    public function getAccessTokens(): Collection
     {
-        return $this->authenticationTokens;
+        return $this->accessTokens;
     }
 
-    public function addAuthenticationToken(AuthenticationToken $authenticationToken): static
+    public function addAccessToken(AccessToken $accessToken): static
     {
-        if (!$this->authenticationTokens->contains($authenticationToken)) {
-            $this->authenticationTokens->add($authenticationToken);
-            $authenticationToken->setOwnedBy($this);
+        if (!$this->accessTokens->contains($accessToken)) {
+            $this->accessTokens->add($accessToken);
+            $accessToken->setOwnedBy($this);
         }
 
         return $this;
     }
 
-    public function removeAuthenticationToken(AuthenticationToken $authenticationToken): static
+    public function removeAccessToken(AccessToken $accessToken): static
     {
-        if ($this->authenticationTokens->removeElement($authenticationToken)) {
+        if ($this->accessTokens->removeElement($accessToken)) {
             // set the owning side to null (unless already changed)
-            if ($authenticationToken->getOwnedBy() === $this) {
-                $authenticationToken->setOwnedBy(null);
+            if ($accessToken->getOwnedBy() === $this) {
+                $accessToken->setOwnedBy(null);
             }
         }
 
