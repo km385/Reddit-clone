@@ -26,7 +26,7 @@ function goBack() {
                     <div class="my-5" v-for="n in 10" :key="n">
                         <div class="flex">
                             <div v-for="m in n" :key="m">
-                                <div class="w-5 h-full"></div>
+                                <div class="w-10 h-full"></div>
                             </div>
                             <CommentPost/>
                         </div>

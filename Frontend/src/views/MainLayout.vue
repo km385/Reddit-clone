@@ -45,12 +45,12 @@ async function postRequest() {
 
 <template>
     <main class="text-white mt-12 flex justify-center">
-        <div class="flex min-h-screen w-4/5">
+        <div class="flex min-h-screen w-4/5 gap-32">
             <div class="z-20 bg-main-bg hidden xl:block ">
                 <CommunitySidebar/>
             </div>
 
-            <div class="grow flex flex-col  gap-4 items-center scroll-smooth">
+            <div class="grow flex flex-col gap-4 items-center scroll-smooth">
                 <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>
                 <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
                 <router-link :to="{name: 'community', params: { community: 'livestreamfail'}}">
