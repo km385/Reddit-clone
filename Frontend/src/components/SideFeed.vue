@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-import IconBookmark from "@/components/icons/IconBookmark.vue";
 import RowComponent from "@/components/RowComponent.vue";
 import IconChevronUp from "@/components/icons/IconChevronUp.vue";
 

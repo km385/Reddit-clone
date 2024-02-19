@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import ArrowUpIcon from "@/components/icons/ArrowUpIcon.vue";
+import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
+import XIcon from "@/components/icons/IconX.vue";
+
+function goBack() {
+
+}
+</script>
 <template>
     <div class="sticky top-12 py-2 left-0 right-0 mx-20 z-10 bg-black ">
         <div class="flex gap-2 text-white">
@@ -20,13 +29,3 @@
         </div>
     </div>
 </template>
-<script>
-import ArrowUpIcon from "@/components/icons/ArrowUpIcon.vue";
-import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
-import XIcon from "@/components/icons/IconX.vue";
-
-export default {
-    name: 'CommentsNavBar',
-    components: {XIcon, ArrowDownIcon, ArrowUpIcon}
-}
-</script>

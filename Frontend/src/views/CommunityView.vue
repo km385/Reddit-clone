@@ -1,10 +1,7 @@
 <script setup lang="ts">
 
 import CommunityBanner from "@/components/CommunityBanner.vue";
-import HomeView from "@/views/HomeView.vue";
 
-import SideFeed from "@/components/SideFeed.vue";
-import RowComponent from "@/components/RowComponent.vue";
 import IconChevronUp from "@/components/icons/IconChevronUp.vue";
 import PostFeed from "@/components/PostFeed.vue";
 </script>

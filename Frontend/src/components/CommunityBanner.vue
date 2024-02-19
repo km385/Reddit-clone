@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import IconDots from "@/components/icons/IconDots.vue";
+import BellIcon from "@/components/navbar/BellIcon.vue";
+import IconAdd from "@/components/icons/IconAdd.vue";
+
+
+</script>
+
 <template>
     <div class="w-full">
         <div class="z-30">
@@ -32,11 +40,3 @@
         </div>
     </div>
 </template>
-<script setup lang="ts">
-import IconDots from "@/components/icons/IconDots.vue";
-import BellIcon from "@/components/navbar/BellIcon.vue";
-import IconAdd from "@/components/icons/IconAdd.vue";
-import IconUser from "@/components/icons/IconUser.vue";
-
-
-</script>

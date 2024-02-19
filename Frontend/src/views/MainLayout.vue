@@ -1,8 +1,6 @@
 <script setup lang="ts">
 
 import axios from "axios";
-import {onMounted, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
 import CommunitySidebar from "@/components/CommunitySidebar.vue";
 
 async function getRequest() {

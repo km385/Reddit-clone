@@ -55,16 +55,11 @@
 
     </div>
 </template>
-<script>
+<script setup lang="ts">
 import IconComments from "@/components/icons/IconComments.vue";
 import IconShare from "@/components/icons/IconShare.vue";
-import IconBookmark from "@/components/icons/IconBookmark.vue";
 import IconDots from "@/components/icons/IconDots.vue";
 import ArrowUpIcon from "@/components/icons/ArrowUpIcon.vue";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon.vue";
 
-export default {
-    name: 'CommentsMainContent',
-    components: {ArrowDownIcon, ArrowUpIcon, IconDots, IconBookmark, IconShare, IconComments}
-}
 </script>

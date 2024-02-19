@@ -1,8 +1,6 @@
 <script setup lang="ts">
 
 import PostFeed from "@/components/PostFeed.vue";
-import IconChevronUp from "@/components/icons/IconChevronUp.vue";
-
 
 </script>
 
