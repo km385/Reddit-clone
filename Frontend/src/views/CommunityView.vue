@@ -16,7 +16,7 @@ import PostFeed from "@/components/PostFeed.vue";
         <div class="
         w-1/3 flex flex-col gap-4
         sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]
-        bg-black rounded-lg p-4">
+        bg-black rounded-lg p-4 scrollbar-styled">
             <div>
                 <h1 class="text-gray-300">
                     r/LivestreamFail: Livestream wins, fails, and everything in between
@@ -66,14 +66,5 @@ import PostFeed from "@/components/PostFeed.vue";
 </template>
 
 <style scoped>
-::-webkit-scrollbar {
-    height: 12px;
-    width: 8px;
 
-}
-
-::-webkit-scrollbar-thumb {
-    background: #3c4345;
-    border-radius: 9999px;
-}
 </style>

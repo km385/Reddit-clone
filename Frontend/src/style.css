@@ -4,6 +4,7 @@
 
 @layer components {
     .scrollbar-styled {
+        scrollbar-gutter: stable;
         @apply scrollbar-thin scrollbar-thumb-[#3c4345] scrollbar-track-transparent
     }
 }

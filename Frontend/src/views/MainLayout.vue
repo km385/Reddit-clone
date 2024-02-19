@@ -51,8 +51,8 @@ async function postRequest() {
             </div>
 
             <div class="grow flex flex-col gap-4 items-center scroll-smooth">
-                <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>
-                <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>
+<!--                <button class="bg-blue-500 rounded-md p-2" @click="getRequest">Communities</button>-->
+<!--                <button class="bg-blue-500 rounded-md p-2" @click="postRequest">not fixed btw</button>-->
                 <router-link :to="{name: 'community', params: { community: 'livestreamfail'}}">
                     <button class="bg-blue-500 rounded-md p-2">Community</button>
                 </router-link>

@@ -16,7 +16,7 @@ function goToComments(n: number) {
 }
 </script>
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-5">
         <div v-for="n in 20" :key="n">
             <TextPost @click="goToComments(n)"/>
         </div>
