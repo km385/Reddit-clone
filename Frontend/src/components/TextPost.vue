@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import PostNav from "@/components/post/PostNav.vue";
-import PostContent from "@/components/PostContent.vue";
-import PostControls from "@/components/PostControls.vue";
+import PostContent from "@/components/post/PostContent.vue";
+import PostControls from "@/components/post/PostControls.vue";
 </script>
 
 <template>
