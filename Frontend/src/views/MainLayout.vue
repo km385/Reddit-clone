@@ -3,7 +3,7 @@
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import CommunitySidebar from "@/views/CommunitySidebar.vue";
+import CommunitySidebar from "@/components/CommunitySidebar.vue";
 
 async function getRequest() {
 
@@ -46,7 +46,7 @@ async function postRequest() {
 <template>
     <main class="text-white mt-12 flex justify-center">
         <div class="flex min-h-screen w-4/5 gap-32">
-            <div class="z-20 bg-main-bg hidden xl:block ">
+            <div class="z-20 bg-main-bg hidden xl:block">
                 <CommunitySidebar/>
             </div>
 
@@ -68,16 +68,7 @@ async function postRequest() {
 </template>
 
 <style scoped>
-::-webkit-scrollbar {
-    height: 12px;
-    width: 8px;
 
-}
-
-::-webkit-scrollbar-thumb {
-    background: #3c4345;
-    border-radius: 9999px;
-}
 
 </style>
 

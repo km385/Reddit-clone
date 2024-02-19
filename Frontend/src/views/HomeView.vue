@@ -1,30 +1,22 @@
 <script setup lang="ts">
 
-import TextPost from "@/components/TextPost.vue";
-import {useRouter} from "vue-router";
+import PostFeed from "@/components/PostFeed.vue";
+import IconChevronUp from "@/components/icons/IconChevronUp.vue";
 
-const router = useRouter()
 
-function goToComments(n: number) {
-    router.push({
-        name: 'comments',
-        params: {
-            community: n,
-            id: n
-        }
-    })
-}
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex justify-between gap-32 w-full">
+        <PostFeed/>
+        <div class="
+        w-1/3 flex flex-col gap-4
+        sticky top-16 overflow-hidden hover:overflow-y-scroll h-fit max-h-[90vh]
+        bg-black rounded-lg p-4 scrollbar-styled">
 
-        <div v-for="n in 20" :key="n">
-            <TextPost @click="goToComments(n)" />
+            <p>Recent posts</p>
+            <p class="hover:text-blue-600 cursor-pointer">Clear</p>
+
         </div>
     </div>
 </template>
-
-<style scoped>
-
-</style>

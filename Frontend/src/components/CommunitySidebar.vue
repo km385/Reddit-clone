@@ -1,6 +1,7 @@
 <template>
     <div class="w-60 flex flex-col gap-4 select-none border-r border-[#242c2e]
-                 sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]">
+                 sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]
+                 scrollbar-styled">
 
         <div>
             <div v-for="n in 3" :key="n">
@@ -50,15 +51,5 @@ const subreddits = [
 ];
 </script>
 <style scoped>
-::-webkit-scrollbar {
-    height: 12px;
-    width: 8px;
-
-}
-
-::-webkit-scrollbar-thumb {
-    background: #3c4345;
-    border-radius: 9999px;
-}
 
 </style>

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 
-import CommunityBanner from "@/views/CommunityBanner.vue";
+import CommunityBanner from "@/components/CommunityBanner.vue";
 import HomeView from "@/views/HomeView.vue";
 
 import SideFeed from "@/components/SideFeed.vue";
 import RowComponent from "@/components/RowComponent.vue";
 import IconChevronUp from "@/components/icons/IconChevronUp.vue";
+import PostFeed from "@/components/PostFeed.vue";
 </script>
 
 <template>
     <CommunityBanner/>
     <div class="flex justify-between gap-32 w-full">
-        <HomeView />
+        <PostFeed/>
         <div class="
         w-1/3 flex flex-col gap-4
         sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]
