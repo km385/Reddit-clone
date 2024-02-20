@@ -6,9 +6,9 @@ import PostFeed from "@/components/PostFeed.vue";
 
 <template>
     <div class="flex justify-between gap-32 w-full">
-        <PostFeed/>
+        <PostFeed class="mx-auto xl:mx-0"/>
         <div class="
-        w-1/3 flex flex-col gap-4
+        w-1/3 hidden xl:flex flex-col gap-4
         sticky top-16 overflow-hidden hover:overflow-y-auto h-fit max-h-[90vh]
         bg-black rounded-lg p-4 scrollbar-styled">
             <div class="flex justify-between">

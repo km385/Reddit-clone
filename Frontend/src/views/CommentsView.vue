@@ -36,7 +36,7 @@ function goBack() {
 
         </div>
         <div class="
-        w-1/3 flex flex-col gap-4
+        w-1/3 hidden xl:flex flex-col gap-4
         sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]
         bg-black rounded-lg p-4 scrollbar-styled">
             <div>

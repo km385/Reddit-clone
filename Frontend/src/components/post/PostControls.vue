@@ -27,8 +27,8 @@ function downVote() {
              class="bg-[#1a282d] rounded-full flex cursor-default">
             <div @click="upVote"
                  :class="{'hover:text-white':isUpVoted || isDownVoted,
-                 'hover:bg-[#d93a00]':isUpVoted,
-                 'hover:bg-[#6a5cff]':isDownVoted}"
+                 'orange-hover':isUpVoted,
+                 'blue-hover':isDownVoted}"
                  class="hover:text-red-600 hover:bg-hover-dark flex rounded-full p-2 cursor-pointer">
                 <div v-if="!isUpVoted">
                     <arrow-up-icon class="w-4"/>
@@ -44,8 +44,8 @@ function downVote() {
 
             <div @click="downVote"
                  :class="{'hover:text-white':isUpVoted || isDownVoted,
-                 'hover:bg-[#d93a00]':isUpVoted,
-                 'hover:bg-[#6a5cff]':isDownVoted}"
+                 'orange-hover':isUpVoted,
+                 'blue-hover':isDownVoted}"
                  class="hover:text-blue-600 hover:bg-hover-dark flex rounded-full p-2 cursor-pointer">
                 <div v-if="!isDownVoted">
                     <arrow-down-icon class="w-4"/>
@@ -67,3 +67,13 @@ function downVote() {
         </div>
     </div>
 </template>
+
+<style scoped>
+    .orange-hover {
+        @apply hover:bg-[#d93a00]
+    }
+
+    .blue-hover {
+        @apply hover:bg-[#6a5cff]
+    }
+</style>
