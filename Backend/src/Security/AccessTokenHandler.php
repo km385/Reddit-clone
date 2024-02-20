@@ -26,10 +26,11 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         [$accessToken, $userIp] = $tokenParts;
 
         $accessToken = $this->repository->findOneBy([
-            'token' => $accessToken
+            "token" => $accessToken
         ]);
+
         if (null === $accessToken) {
-            throw new BadCredentialsException('No such Access token found.');
+            throw new CustomUserMessageAuthenticationException('No such Access token found.');
         }
         switch ($accessToken->isValid($userIp)) {
             case '0': // Session is valid

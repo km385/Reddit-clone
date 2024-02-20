@@ -15,7 +15,7 @@ class AccessTokenExtractor implements AccessTokenExtractorInterface
     ) {
         $this->regex = sprintf(
             '/^%s([a-zA-Z0-9\-_\+~\/\.]+)$/',
-            '' === $this->tokenType ? '' : preg_quote($this->tokenType).'\s+'
+            '' === $this->tokenType ? '' : preg_quote($this->tokenType) . '\s+'
         );
     }
 
@@ -27,7 +27,7 @@ class AccessTokenExtractor implements AccessTokenExtractorInterface
 
         if (preg_match($this->regex, $header, $matches)) {
             $userIp = $request->getClientIp();
-            return $matches[1] . '|' . ($userIp!== null ? $userIp : '0');
+            return sprintf('%s|%s', $matches[1], $userIp !== null ? $userIp : '0');
         }
 
         return null;
