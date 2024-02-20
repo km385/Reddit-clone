@@ -15,10 +15,12 @@ security:
             security: false
         main:
             lazy: true
+            stateless: true
             provider: app_user_provider
-
+            
             json_login:
                 check_path: json_app_login
+
 
             access_token:
                 token_extractors: App\Security\AccessTokenExtractor

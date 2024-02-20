@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use App\Entity\User;
 use App\Entity\AccessToken;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,18 +15,9 @@ class AccessController extends AbstractController
 {
     //TODO: remove
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(): Response
     {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('authentication/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
-        ]);
+        return $this->render('authentication/login.html.twig');
     }
 
     #[Route(
@@ -51,7 +41,7 @@ class AccessController extends AbstractController
         ->setOwnedBy($user)
         ->setUserAddress($userIp)
         //TODO: ADD remember me boolean and null as expiration
-        ->setExpiresAt(new \DateTimeImmutable('+6 hour'));
+        ->setExpiresAt(new \DateTimeImmutable('+1 day'));
 
         $entityManager->persist($authenticationToken);
         $entityManager->flush();
