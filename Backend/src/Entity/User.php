@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write', 'user:create', 'post:read', 'community:read'])]
+    #[Groups(['user:read', 'user:write', 'user:create', 'post:read', 'subreddit:read'])]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 

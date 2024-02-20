@@ -50,16 +50,13 @@
 |                          | Adding Necessary Fields                                    | ✅ Done   |
 |                          | Making Amount of Members Change Dynamically                | ✅ Done   |
 |                          | Make Owner Automatically Become Member                     | ✅ Done   |
-|                          | Add Approving Members For Private & Restricted Communites  | ⭕ Not Started  |
 |                          | Replace Communites with subreddits                         | ✅ Done  |
 |                          | Change Owner to Creator                                    | ✅ Done  |
 |                          | Adding Filtrations                                         | ✅ Done  |
 |                          | Adding Normalization Groups                                | ✅ Done  |
-|                          | Adding Embed                                               | ⭕ Not Started  |
 |                          | Adding Factory                                             | ✅ Done  |
-|                          | Securing Requests                                          | ⭕ Not Started  |
-|                          | Making Community subresource                               | ⭕ Not Started  |
-|                          | Debugging                                                  | ⭕ Not Started  |
+|                          | Securing Requests                                          | ✅ Done  |
+|                          | Debugging                                                  | ✅ Done  |
 |                          | Tests                                                      | ⭕ Not Started  |
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
 |                          | Implementing `Memberships` entity     | ✅ Done    |
@@ -102,10 +99,41 @@
 |                          | Tests                          | ⭕ Not Started|
 
 ## Notes:
-- Remove Carbon if not needed (
-    consider creating methods for returning human version of dates '5 months ago'
-)
-- Consider replacing Session token with JWT
-- In sec step:
-    -add agent and ip to token validation
-    -add image upload
+- Remove Carbon
+-rename modifiedAt to updatedAt
+-add createdAt and modifiedAt in seconds
+-make number of users a not dynamic field thats updated on members changes
+
+```
+   /**
+     * Returns the difference in seconds between the creation date and now.
+     *
+     * @return int The difference in seconds
+     */
+    
+    #[Groups(['subreddit:read'])]
+    public function getCreatedAtInSeconds(): ?int
+    {
+        $now = new \DateTime();
+        return ($now->getTimestamp() - $this->createdAt->getTimestamp());
+    }
+```
+
+
+- To do in following steps:
+    -user favorites
+    -add image upload system
+    -add functionality to statuses 
+        -(community, posts, comments)
+    -karama
+    -Subreddit functionalities:
+        -mod lists 
+        -approved lists
+        -add rank by size
+        -online users
+        -user flairs
+    -custom results base on variables and permissions 
+        -(nsfw don't show to unauthorized)
+    -add messanging system:
+        -send message if needed when user joisn subreddit
+        -allow customization of the messege

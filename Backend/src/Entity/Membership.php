@@ -36,13 +36,11 @@ class Membership
     private ?\DateTimeInterface $createdAt;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read'])]
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Community $subreddit = null;
 
     #[Assert\NotBlank]
-    #[Groups(['community:read'])]
     #[ORM\ManyToOne(inversedBy: 'joinedSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $member = null;

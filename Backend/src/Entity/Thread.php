@@ -20,7 +20,7 @@ use ApiPlatform\Serializer\Filter\PropertyFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\ApiFilter;
-
+use ApiPlatform\Metadata\Link;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,7 +46,20 @@ use Doctrine\ORM\Mapping as ORM;
     ],
     paginationItemsPerPage: 35,
 )]
-
+#[ApiResource(
+    uriTemplate: '/subreddit/{subreddit_id}/.{_format}',
+    shortName: 'Post',
+    operations: [new GetCollection()],
+    uriVariables: [
+        'subreddit_id' => new Link(
+            fromProperty: 'posts',
+            fromClass: Community::class,
+        ),
+    ],
+    normalizationContext: [
+        'groups' => ['post:read'],
+    ],
+)]
 
 //TODO: By ammount of comments
 //TODO: Make custom filter for status
@@ -308,7 +321,7 @@ class Thread
         //TODO: check if author is on authorized list
         $this->subreddit = $subreddit;
         //if community is private, set status to pending approval
-        $this->status = ($this->subreddit->getStatus() == Community::STATUS_COMMU_PRIVATE) ? self::STATUS_POST_PENDING_APPROVAL : self::STATUS_POST_APPROVED;
+        $this->status = ($this->subreddit->getStatus() == Community::STATUS_SUBRE_PRIVATE) ? self::STATUS_POST_PENDING_APPROVAL : self::STATUS_POST_APPROVED;
         return $this;
     }
 

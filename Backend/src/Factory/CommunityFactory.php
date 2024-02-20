@@ -48,9 +48,9 @@ final class CommunityFactory extends ModelFactory
             'description' => self::faker()->paragraph(),
             'sendWelcomeMessage' => self::faker()->boolean(),
             'status' => self::faker()->randomElement([
-                Community::STATUS_COMMU_PRIVATE,
-                Community::STATUS_COMMU_RESTRICTED,
-                Community::STATUS_COMMU_PUBLIC
+                Community::STATUS_SUBRE_PRIVATE,
+                Community::STATUS_SUBRE_RESTRICTED,
+                Community::STATUS_SUBRE_PUBLIC
             ]),
             'creator' => UserFactory::new(),
         ];
