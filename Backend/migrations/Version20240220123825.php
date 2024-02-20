@@ -8,9 +8,9 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Comments migration.
  */
-final class Version20240216103909 extends AbstractMigration
+final class Version20240220123825 extends AbstractMigration
 {
     public function getDescription(): string
     {
