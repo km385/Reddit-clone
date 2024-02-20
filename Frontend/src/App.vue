@@ -3,7 +3,9 @@ import {RouterView} from 'vue-router'
 import RedditLogo from "@/components/icons/RedditIcon.vue";
 import SearchBar from "@/components/navbar/SearchBar.vue";
 import NavBarIcons from "@/components/navbar/NavBarIcons.vue";
-import IconUser from "@/components/icons/IconUser.vue";
+
+import UserMenu from "@/UserMenu.vue";
+
 </script>
 
 <template>
@@ -20,9 +22,9 @@ import IconUser from "@/components/icons/IconUser.vue";
                 <SearchBar class="w-3/5"/>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex gap-2 mr-5">
                 <NavBarIcons/>
-                <icon-user class="w-6 "/>
+                <UserMenu/>
             </div>
         </div>
     </header>
@@ -31,4 +33,6 @@ import IconUser from "@/components/icons/IconUser.vue";
     </div>
 
 </template>
+
+
 
