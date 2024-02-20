@@ -14,10 +14,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-#[UniqueEntity(fields: ['community', 'member'], message: "This membership already exists.")]
+#[UniqueEntity(fields: ['subreddit', 'member'], message: "You are already member of this subreddit.")]
 #[ORM\Entity(repositoryClass: MembershipRepository::class)]
 #[ApiResource(
-    description: "You are already member of this community.",
+    description: "A representation of a single user being a member of given subreddit.",
     operations: [
         new Get,
         //new GetCollection,
@@ -39,11 +39,11 @@ class Membership
     #[Groups(['user:read'])]
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Community $community = null;
+    private ?Community $subreddit = null;
 
     #[Assert\NotBlank]
     #[Groups(['community:read'])]
-    #[ORM\ManyToOne(inversedBy: 'joinedCommunities')]
+    #[ORM\ManyToOne(inversedBy: 'joinedSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $member = null;
 
@@ -62,14 +62,14 @@ class Membership
         return $this->createdAt;
     }
 
-    public function getCommunity(): ?Community
+    public function getSubreddit(): ?Community
     {
-        return $this->community;
+        return $this->subreddit;
     }
 
-    public function setCommunity(?Community $community): static
+    public function setSubreddit(?Community $subreddit): static
     {
-        $this->community = $community;
+        $this->subreddit = $subreddit;
 
         return $this;
     }

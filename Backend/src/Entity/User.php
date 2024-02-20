@@ -67,7 +67,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'nickname' => 'ipartial'])]
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 #[ApiFilter(PropertyFilter::class)]
-#[ApiFilter(ExistsFilter::class, properties: ['createdCommunities'])]
+#[ApiFilter(ExistsFilter::class, properties: ['createdSubreddits'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -76,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write', 'user:create','post:read','community:read'])]
+    #[Groups(['user:read', 'user:write', 'user:create', 'post:read', 'community:read'])]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $nickname = null;
 
@@ -103,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $login = null;
 
     #[Assert\NotBlank]
-    #[Groups(['user:read', 'user:write', 'user:create','post:read'])]
+    #[Groups(['user:read', 'user:write', 'user:create', 'post:read'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $birthday = null;
 
@@ -111,17 +111,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
 
-    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'creator', orphanRemoval: false)]
-    #[Groups(['user:read', 'user:write'])]
-    private Collection $createdCommunities;
-
     #[Assert\NotBlank(groups: ['user:create'])]
     #[Groups(['user:write', 'user:create'])]
     private ?string $plainPassword = null;
 
+    #[ORM\OneToMany(targetEntity: Community::class, mappedBy: 'creator', orphanRemoval: false)]
+    #[Groups(['user:read', 'user:write'])]
+    private Collection $createdSubreddits;
+
     #[Groups(['user:read'])]
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
-    private Collection $joinedCommunities;
+    private Collection $joinedSubreddits;
 
     #[Groups(['user:read', 'user:write'])]
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Thread::class)]
@@ -137,13 +137,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->createdCommunities = new ArrayCollection();
-        $this->joinedCommunities = new ArrayCollection();
+        $this->createdSubreddits = new ArrayCollection();
+        $this->joinedSubreddits = new ArrayCollection();
         $this->posts = new ArrayCollection();
-        // guarantee every user at least has ROLE_USER
-        $this->roles[] = 'ROLE_USER';
         $this->comments = new ArrayCollection();
         $this->accessTokens = new ArrayCollection();
+
+        // guarantee every user at least has ROLE_USER
+        $this->roles[] = 'ROLE_USER';
     }
 
     public function getId(): ?int
@@ -268,27 +269,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Community>
      */
-    public function getCreatedCommunities(): Collection
+    public function getCreatedSubreddits(): Collection
     {
-        return $this->createdCommunities;
+        return $this->createdSubreddits;
     }
 
-    public function addCreatedCommunity(Community $createdCommunity): static
+    public function addCreatedSubreddit(Community $createdSubreddit): static
     {
-        if (!$this->createdCommunities->contains($createdCommunity)) {
-            $this->createdCommunities->add($createdCommunity);
-            $createdCommunity->setCreator($this);
+        if (!$this->createdSubreddits->contains($createdSubreddit)) {
+            $this->createdSubreddits->add($createdSubreddit);
+            $createdSubreddit->setCreator($this);
         }
 
         return $this;
     }
 
-    public function removeCreatedCommunity(Community $createdCommunity): static
+    public function removeCreatedSubreddit(Community $createdSubreddit): static
     {
-        if ($this->createdCommunities->removeElement($createdCommunity)) {
+        if ($this->createdSubreddits->removeElement($createdSubreddit)) {
             // set the owning side to null (unless already changed)
-            if ($createdCommunity->getCreator() === $this) {
-                $createdCommunity->setCreator(null);
+            if ($createdSubreddit->getCreator() === $this) {
+                $createdSubreddit->setCreator(null);
             }
         }
 
@@ -298,27 +299,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Membership>
      */
-    public function getJoinedCommunities(): Collection
+    public function getJoinedSubreddits(): Collection
     {
-        return $this->joinedCommunities;
+        return $this->joinedSubreddits;
     }
 
-    public function addJoinedCommunity(Membership $joinedCommunity): static
+    public function addJoinedSubreddit(Membership $joinedSubreddit): static
     {
-        if (!$this->joinedCommunities->contains($joinedCommunity)) {
-            $this->joinedCommunities->add($joinedCommunity);
-            $joinedCommunity->setMember($this);
+        if (!$this->joinedSubreddits->contains($joinedSubreddit)) {
+            $this->joinedSubreddits->add($joinedSubreddit);
+            $joinedSubreddit->setMember($this);
         }
 
         return $this;
     }
 
-    public function removeJoinedCommunity(Membership $joinedCommunity): static
+    public function removeJoinedSubreddit(Membership $joinedSubreddit): static
     {
-        if ($this->joinedCommunities->removeElement($joinedCommunity)) {
+        if ($this->joinedSubreddits->removeElement($joinedSubreddit)) {
             // set the owning side to null (unless already changed)
-            if ($joinedCommunity->getMember() === $this) {
-                $joinedCommunity->setMember(null);
+            if ($joinedSubreddit->getMember() === $this) {
+                $joinedSubreddit->setMember(null);
             }
         }
 

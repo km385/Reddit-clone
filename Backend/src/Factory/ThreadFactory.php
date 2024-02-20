@@ -44,7 +44,7 @@ final class ThreadFactory extends ModelFactory
     {
         return [
             'author' => UserFactory::new(),
-            'community' => CommunityFactory::new(),
+            'subreddit' => CommunityFactory::new(),
             'isLocked' => self::faker()->boolean(),
             'isNsfw' => self::faker()->boolean(),
             'isSpoiler' => self::faker()->boolean(),

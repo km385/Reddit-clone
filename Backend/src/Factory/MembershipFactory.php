@@ -43,7 +43,7 @@ final class MembershipFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'community' => CommunityFactory::new(),
+            'subreddit' => CommunityFactory::new(),
             'member' => UserFactory::new(),
         ];
     }

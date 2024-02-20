@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThreadRepository::class)]
 #[ApiResource(
-    description: "Represents a single piece of content submitted by a given user to a given community.",
+    description: "Represents a single piece of content submitted by a given user to a given subreddit.",
     shortName: "Post",
     operations: [
         // new Get,
@@ -162,13 +162,11 @@ class Thread
     #[Groups(['post:read', 'post:create'])]
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Community $community = null;
+    private ?Community $subreddit = null;
 
     #[Groups(['post:read'])]
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
-
-    //TODO: comments
 
     public function __construct()
     {
@@ -301,16 +299,16 @@ class Thread
         return $this;
     }
 
-    public function getCommunity(): ?Community
+    public function getSubreddit(): ?Community
     {
-        return $this->community;
+        return $this->subreddit;
     }
-    public function setCommunity(?Community $community): static
+    public function setSubreddit(?Community $subreddit): static
     {
         //TODO: check if author is on authorized list
-        $this->community = $community;
+        $this->subreddit = $subreddit;
         //if community is private, set status to pending approval
-        $this->status = ($this->community->getStatus() == Community::STATUS_COMMU_PRIVATE) ? self::STATUS_POST_PENDING_APPROVAL : self::STATUS_POST_APPROVED;
+        $this->status = ($this->subreddit->getStatus() == Community::STATUS_COMMU_PRIVATE) ? self::STATUS_POST_PENDING_APPROVAL : self::STATUS_POST_APPROVED;
         return $this;
     }
 

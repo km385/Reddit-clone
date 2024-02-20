@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
         UserFactory::createMany($numberOf);
         echo "   > $numberOf User entities successfully created.\n";
 
-        // Create 5 communities created by some one the users
+        // Create 5 subreddits created by some one the users
         $numberOf = 5;
         $communities = CommunityFactory::createMany($numberOf, function () {
             return [
@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
             ];
         });
         $numberOf = count($communities);
-        echo "   > $numberOf Community entities successfully created.\n";
+        echo "   > $numberOf Subreddit entities successfully created.\n";
 
         /**
          * Generate 100 random memberships with a limit on consecutive attempts.
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
                 if (!in_array($id, $existing_pairs) && $community->getCreator()->getId() !== $user->getId()) {
                     array_push($existing_pairs, $id);
                     return [
-                        'community' => $community,
+                        'subreddit' => $community,
                         'member' => $user,
                     ];
                 }
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
             }
             // The case where duplicates are allowed 'cuz max attempts have been reached
             return [
-                'community' => CommunityFactory::random(),
+                'subreddit' => CommunityFactory::random(),
                 'member' => UserFactory::random(),
             ];
         });
@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
             $membership = MembershipFactory::random();
             return [
                 'author' => $membership->getMember(),
-                'community' => $membership->getCommunity(),
+                'subreddit' => $membership->getSubreddit(),
             ];
         });
         echo "   > $numberOf Post entities sucesfully created.\n";

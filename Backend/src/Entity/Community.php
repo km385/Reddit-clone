@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
@@ -28,10 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommunityRepository::class)]
 #[ApiResource(
-    description: "Represents a community of users, containing posts from given topics.",
-    //TODO: replace with sub reddit 
-    shortName: "Reddit",
+    description: "Represents a group of users, containing posts from given topics.",
+    shortName: "Subreddit",
     operations: [
+        //(security: "is_granted('ROLE_ADMIN') or object.owner == user")
         // new Get,
         new GetCollection,
         new Post(
@@ -55,12 +54,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 #[ApiFilter(RangeFilter::class, properties: ['numberOfUsers'])]
 #[ApiFilter(PropertyFilter::class)]
-#[UniqueEntity(fields: ['name'], message: 'There is already a community with this name')]
+#[UniqueEntity(fields: ['name'], message: 'There is already a subreddit with this name')]
 class Community
 {
     /**
-     * Constants representing statuses for communities:
-     * - STATUS_COMMU_PUBLIC: Anyone can view, post, and comment to this community.
+     * Constants representing statuses for subreddits:
+     * - STATUS_COMMU_PUBLIC: Anyone can view, post, and comment to this subreddit.
      */
     const STATUS_COMMU_PUBLIC = 'public';
 
@@ -70,7 +69,7 @@ class Community
     const STATUS_COMMU_PRIVATE = 'private';
 
     /**
-     * STATUS_COMMU_RESTRICTED: Only approved users can view and submit to this community.
+     * STATUS_COMMU_RESTRICTED: Only approved users can view and submit to this subreddit.
      */
     const STATUS_COMMU_RESTRICTED = 'restricted';
 
@@ -80,12 +79,12 @@ class Community
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 3, max: 21, maxMessage: 'Community name should be between 3 and 21 characters long')]
+    #[Assert\Length(min: 3, max: 21, maxMessage: 'Subreddit name should be between 3 and 21 characters long')]
     #[Groups(['community:read', 'community:write', 'community:create', 'post:read'])]
     #[ORM\Column(length: 21, unique: true)]
     private ?string $name = null;
 
-    #[Assert\Length(min: 0, max: 500, maxMessage: 'Community description should be between 0 and 500 characters long')]
+    #[Assert\Length(min: 0, max: 500, maxMessage: 'Subreddit description should be between 0 and 500 characters long')]
     #[Groups(['community:read', 'community:write', 'community:create'])]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
@@ -96,7 +95,7 @@ class Community
 
     #[Assert\Regex(
         pattern: '/^(public|restricted|private)$/',
-        message: 'The status must be "public", "restricted", or "private".'
+        message: 'The status of a subreddit must be "public", "restricted", or "private".'
     )]
     #[Groups(['community:read', 'community:write', 'community:create', 'post:read'])]
     #[ORM\Column(length: 10)]
@@ -108,16 +107,16 @@ class Community
     private ?bool $sendWelcomeMessage = false;
 
     #[Groups(['community:read', 'community:write', 'community:create'])]
-    #[ORM\ManyToOne(inversedBy: 'createdCommunities')]
+    #[ORM\ManyToOne(inversedBy: 'createdSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
     #[Groups(['community:read', 'community:write'])]
-    #[ORM\OneToMany(mappedBy: 'community', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'subreddit', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $members;
 
     #[Groups(['community:read', 'community:write'])]
-    #[ORM\OneToMany(mappedBy: 'community', targetEntity: Thread::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'subreddit', targetEntity: Thread::class, orphanRemoval: true)]
     private Collection $posts;
 
     public function __construct()
@@ -225,7 +224,7 @@ class Community
         if ($creator !== null) {
             $membership = new Membership();
             $membership->setMember($creator);
-            $membership->setCommunity($this);
+            $membership->setSubreddit($this);
             $this->members->add($membership);
         }
 
@@ -244,7 +243,7 @@ class Community
     {
         if (!$this->members->contains($member)) {
             $this->members->add($member);
-            $member->setCommunity($this);
+            $member->setSubreddit($this);
         }
         return $this;
     }
@@ -252,8 +251,8 @@ class Community
     public function removeMember(Membership $member): static
     {
         if ($this->members->removeElement($member)) {
-            if ($member->getCommunity() === $this) {
-                $member->setCommunity(null);
+            if ($member->getSubreddit() === $this) {
+                $member->setSubreddit(null);
             }
         }
         return $this;
@@ -271,7 +270,7 @@ class Community
     {
         if (!$this->posts->contains($post)) {
             $this->posts->add($post);
-            $post->setCommunity($this);
+            $post->setSubreddit($this);
         }
 
         return $this;
@@ -281,8 +280,8 @@ class Community
     {
         if ($this->posts->removeElement($post)) {
             // set the owning side to null (unless already changed)
-            if ($post->getCommunity() === $this) {
-                $post->setCommunity(null);
+            if ($post->getSubreddit() === $this) {
+                $post->setSubreddit(null);
             }
         }
 

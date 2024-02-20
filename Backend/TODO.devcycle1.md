@@ -51,7 +51,7 @@
 |                          | Making Amount of Members Change Dynamically                | ✅ Done   |
 |                          | Make Owner Automatically Become Member                     | ✅ Done   |
 |                          | Add Approving Members For Private & Restricted Communites  | ⭕ Not Started  |
-|                          | Replace Communites with subreddits                         | ⭕ Not Started  |
+|                          | Replace Communites with subreddits                         | ✅ Done  |
 |                          | Change Owner to Creator                                    | ✅ Done  |
 |                          | Adding Filtrations                                         | ✅ Done  |
 |                          | Adding Normalization Groups                                | ✅ Done  |
