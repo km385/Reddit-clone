@@ -10,10 +10,10 @@ function closeMenu() {
 </script>
 
 <template>
-    <div class="relative flex cursor-pointer" v-click-outside="closeMenu">
-        <icon-user @click="showMenu = !showMenu" class="w-6 cursor-pointer"/>
+    <div class="relative flex cursor-pointer" @click.stop="showMenu = !showMenu">
+        <icon-user  class="w-6 cursor-pointer"/>
         <transition name="slide-fade">
-            <div @click.stop v-if="showMenu"
+            <div @click.stop v-if="showMenu" v-click-outside="closeMenu"
                  class="absolute bg-main-bg right-0 top-8 shadow-lg shadow-black select-none w-[260px] py-2">
                 <div  class="flex flex-col divide-y divide-[#273133] gap-2">
                     <div class="flex flex-col">

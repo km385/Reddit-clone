@@ -55,10 +55,10 @@ function closeMenu() {
         </div>
 
         <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
-        <div class="hover:bg-hover-dark hover:rounded-full p-2 relative" @click.stop="showMenu = !showMenu" v-click-outside="closeMenu">
+        <div class="hover:bg-hover-dark hover:rounded-full p-2 relative" @click.stop="showMenu = !showMenu">
             <icon-dots/>
             <transition name="slide-fade">
-                <div @click.stop v-if="showMenu"
+                <div @click.stop v-if="showMenu" v-click-outside="closeMenu"
                      class="absolute bg-main-bg right-0 top-8 flex flex-col shadow-lg shadow-black select-text">
                     <div class="p-3 hover:bg-hover-light flex items-center gap-2">
                         <icon-bookmark/>
