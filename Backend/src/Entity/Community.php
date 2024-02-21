@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\CommunityRepository;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-
+use App\State\CommunityCreatorSetter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,6 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => ['subreddit:read_list']]
         ),
         new Post(
+            processor: CommunityCreatorSetter::class,
             denormalizationContext: ['groups' => ['subreddit:create']],
             security: "is_authenticated()",
             securityMessage: "Only logged-in users can create a subreddit.",
@@ -94,25 +95,25 @@ class Community
     private ?\DateTimeInterface $createdAt;
 
     #[ApiProperty(
-        security: "is_granted('ROLE_REDDIT_ADMIN') or object.getCreator() == user",
+        security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
     #[Assert\Regex(
         pattern: '/^(public|restricted|private)$/',
         message: 'The status of a subreddit must be "public", "restricted", or "private".'
     )]
-    #[Groups(['subreddit:read', 'subreddit:write', 'subreddit:create', 'post:read'])]
+    #[Groups(['subreddit:read', 'subreddit:write', 'subreddit:create'])]
     #[ORM\Column(length: 10)]
     private ?string $status = self::STATUS_SUBRE_PUBLIC;
 
     #[ApiProperty(
-        security: "is_granted('ROLE_REDDIT_ADMIN') or object.getCreator() == user",
+        security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
     #[Groups(['subreddit:read', 'subreddit:write', 'subreddit:create'])]
     #[ORM\Column]
     private ?bool $sendWelcomeMessage = false;
 
     #[ApiProperty(
-        security: "is_granted('ROLE_REDDIT_ADMIN') or object.getCreator() == user",
+        security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
     #[Groups(['subreddit:read', 'subreddit:write', 'subreddit:create'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
