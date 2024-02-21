@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconUser from "@/components/icons/IconUser.vue";
 import {ref} from "vue";
-import LoginComponent from "@/components/LoginComponent.vue";
+import PopUpComponent from "@/components/login/PopUpComponent.vue";
 
 const showMenu = ref(false)
 
@@ -13,7 +13,7 @@ const showLoginScreen = ref(false)
 </script>
 
 <template>
-    <LoginComponent v-if="showLoginScreen" @close="showLoginScreen = false"/>
+    <PopUpComponent v-if="showLoginScreen" @close="showLoginScreen = false"/>
     <div class="relative flex cursor-pointer " @click.stop="showMenu = !showMenu">
         <icon-user  class="w-6 cursor-pointer"/>
         <transition name="slide-fade">
