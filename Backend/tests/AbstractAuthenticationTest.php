@@ -8,32 +8,49 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-abstract class AbstractTest extends ApiTestCase
+abstract class AbstractAuthenticationTest extends ApiTestCase
 {
     private ?string $token = null;
+    private ?string $userIRS = null;
+    private ?string $userLogin = null;
 
     use ResetDatabase;
     use Factories;
 
-    protected function getToken(User $user = null): ?string
+    protected function login(User $user = null): ?string
     {
-        if ($this->token) {
-            return $this->token;
-        }
         if ($user === null) {
             $user = UserFactory::createOne();
         }
 
         $response = static::createClient()->request('POST', '/login_json', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
             'json' => [
                 'username' => $user->getLogin(),
-                'password' => "password",
+                'password' => 'password',
             ],
         ]);
 
         $json = json_decode($response->getContent(), true);
         $this->token = $json['token'];
-
+        $this->userIRS = $json['IRS'];
+        $this->userLogin = $json['login'];
         return $json['token'];
+    }
+    protected function getUserIRS(): ?string
+    {
+        return $this->userIRS;
+    }
+
+    protected function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    protected function getUserNickname(): ?string
+    {
+        return $this->userLogin;
     }
 }

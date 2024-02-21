@@ -44,7 +44,7 @@
 |                          | Securing Requests                     | ⭕ Not Started  |
 |                          | Debugging                             | ⭕ Not Started  |
 |                          | Tests                                 | ⭕ Not Started  |
-| Community Table          |                                                            | ❌ -Incomplete- ❌|
+| Community (Subreddit) Table          |                                                            | 🎉 -Closed- 🎉|
 |                          | Implementing `Communities` entity                          | ✅ Done   |
 |                          | Adding status                                              | ✅ Done   |
 |                          | Adding Necessary Fields                                    | ✅ Done   |
@@ -57,7 +57,7 @@
 |                          | Adding Factory                                             | ✅ Done  |
 |                          | Securing Requests                                          | ✅ Done  |
 |                          | Debugging                                                  | ✅ Done  |
-|                          | Tests                                                      | ⭕ Not Started  |
+|                          | Tests                                                      | ✅ Done  |
 | Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
 |                          | Implementing `Memberships` entity     | ✅ Done    |
 |                          | Adding Necessary Fields               | ✅ Done    |
@@ -99,10 +99,45 @@
 |                          | Tests                          | ⭕ Not Started|
 
 ## Notes:
-- Remove Carbon
--rename modifiedAt to updatedAt
--add createdAt and modifiedAt in seconds
--make number of users a not dynamic field thats updated on members changes
+- rename modifiedAt to updatedAt
+- add createdAt and modifiedAt in seconds
+- make number of users a not dynamic field thats updated on members changes
+- log out route, that removes given token
+- boolean field to invalidate token
+- split fixture into multiple stories
+- add test commands to readme
+    `Symfony php bin/phpunit --verbose --testdox  tests/Api/CommunityTest.php`
+    `Symfony php bin/phpunit --verbose --testdox  --filter=testCommunityListHasWorkingPagination`
+
+- To do in following steps:
+    - add admin user method in factories
+    - add functionality to statuses 
+         - posts 
+         - comments
+    - karama system
+    - Subreddit functionalities:
+         - change from creator to moderator collection and hide creator field
+         - hide nsfw communities for not authorized users and with settings to no nswf
+         - status:
+             - hide restricted subs fro avg user
+             - stop making posts for private subs
+             - make approved list to invalidate above
+         - mod lists 
+         - approved lists
+         - add rank by size
+         - online users
+         - user flairs
+    - user functionalites:
+         - favorites
+    - image upload/storage system
+    - notification system:
+        - send notifications on karma thresholds
+        - send noifications on comments, etc
+    - messanging system:
+        - send message if needed when user joisn subreddit
+        - allow customization of the messege
+
+##Use later:
 
 ```
    /**
@@ -118,22 +153,3 @@
         return ($now->getTimestamp() - $this->createdAt->getTimestamp());
     }
 ```
-
-
-- To do in following steps:
-    -user favorites
-    -add image upload system
-    -add functionality to statuses 
-        -(community, posts, comments)
-    -karama
-    -Subreddit functionalities:
-        -mod lists 
-        -approved lists
-        -add rank by size
-        -online users
-        -user flairs
-    -custom results base on variables and permissions 
-        -(nsfw don't show to unauthorized)
-    -add messanging system:
-        -send message if needed when user joisn subreddit
-        -allow customization of the messege
