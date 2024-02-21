@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import IconUser from "@/components/icons/IconUser.vue";
 import {ref} from "vue";
+import LoginComponent from "@/components/LoginComponent.vue";
 
 const showMenu = ref(false)
 
 function closeMenu() {
     showMenu.value = false
 }
+
+const showLoginScreen = ref(false)
 </script>
 
 <template>
-    <div class="relative flex cursor-pointer" @click.stop="showMenu = !showMenu">
+    <LoginComponent v-if="showLoginScreen" @close="showLoginScreen = false"/>
+    <div class="relative flex cursor-pointer " @click.stop="showMenu = !showMenu">
         <icon-user  class="w-6 cursor-pointer"/>
         <transition name="slide-fade">
             <div @click.stop v-if="showMenu" v-click-outside="closeMenu"
@@ -31,7 +35,7 @@ function closeMenu() {
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Edit Avatar</div>
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Contributor Program</div>
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Dark Mode</div>
-                        <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Log Out</div>
+                        <div @click="showLoginScreen = true;showMenu = false" class="hover:bg-hover-light px-7 py-4 cursor-pointer">Log Out</div>
                     </div>
                     <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Advertise on Reddit</div>
                     <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Settings</div>

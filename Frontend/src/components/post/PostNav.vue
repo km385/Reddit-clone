@@ -2,7 +2,7 @@
 
 import IconDots from "@/components/icons/IconDots.vue";
 import IconBookmark from "@/components/icons/IconBookmark.vue";
-import {ref} from "vue";
+import {onBeforeUnmount, ref} from "vue";
 import IconUser from "@/components/icons/IconUser.vue";
 
 const showMenu = ref(false)
@@ -13,14 +13,29 @@ function closeMenu() {
     showMenu.value = false
 }
 
+let hideTimeout:number|undefined
+function hideCommunityInfo() {
+    hideTimeout = setTimeout(() => {
+        showCommunityInfo.value = false
+    }, 800)
+}
+
+function cancelHide() {
+    clearTimeout(hideTimeout)
+}
+
+onBeforeUnmount(() => {
+    cancelHide()
+})
+
 </script>
 <template>
     <div class="text-sm mt-2 flex items-center gap-1">
-        <div class="relative" @mouseover="showCommunityInfo = true"
-             @mouseleave="showCommunityInfo = false">
+        <div class="relative" @mouseover="cancelHide();showCommunityInfo = true"
+             @mouseleave="hideCommunityInfo">
             <p class="text-white hover:text-text-blue">r/shitposting</p>
             <transition name="slide-fade">
-                <div v-if="showCommunityInfo"
+                <div v-if="showCommunityInfo" @mouseenter="cancelHide"
                      class="absolute bg-main-bg top-8 flex flex-col shadow-lg shadow-black select-text z-10    ">
                     <div class="p-3 hover:bg-hover-light flex items-center gap-2">
                         <icon-user class="w-8"/>
