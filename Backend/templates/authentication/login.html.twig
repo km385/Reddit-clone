@@ -54,7 +54,9 @@
                 // Store the token in the hidden input field
                 document.getElementById('token').value = data.token;
                 document.getElementById('result').innerText = 'Login Successful';
-                document.getElementById('response').innerHTML = '<strong>Token:</strong> ' + data.token + '<br><strong>User:</strong> ' + data.user;
+                document.getElementById('response').innerHTML = '<strong>Token:</strong> ' + data.token
+                     + '<br><strong>User Login:</strong> ' + data.login
+                     + '<br><strong>User IRS:</strong> ' + data.IRS;
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);

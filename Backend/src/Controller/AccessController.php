@@ -10,10 +10,11 @@ use App\Entity\User;
 use App\Entity\AccessToken;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use ApiPlatform\Api\IriConverterInterface;
 
 class AccessController extends AbstractController
 {
-    //TODO: remove
+
     #[Route(path: '/login', name: 'app_login')]
     public function login(): Response
     {
@@ -25,7 +26,7 @@ class AccessController extends AbstractController
         name: 'json_app_login',
         methods: ['POST'],
     )]
-    public function loginJson(#[CurrentUser] ?User $user, EntityManagerInterface $entityManager, Request $request): Response
+    public function loginJson(#[CurrentUser] ?User $user, EntityManagerInterface $entityManager,IriConverterInterface $iriConverter, Request $request): Response
     {
         $userIp = $request->getClientIp();
 
@@ -48,7 +49,8 @@ class AccessController extends AbstractController
 
         return $this->json([
             'token' => $authenticationToken->getToken(),
-            'user' => $user->getUserIdentifier(),
+            'login' => $user->getUserIdentifier(),
+            'IRS' => $iriConverter->getIriFromResource($user),
         ]);
     }
 }
