@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             security: "is_authenticated()",
             securityMessage: "Only logged-in users can create a subreddit.",
         ),
-        new Put(
+        new Patch(
             security: "is_granted('ROLE_REDDIT_ADMIN') or object.getCreator() == user",
             securityMessage: "Only owner of the subreddit can modify it.",
         ),
@@ -87,12 +87,9 @@ class Community
     private ?string $name = null;
 
     #[Assert\Length(min: 0, max: 500, maxMessage: 'Subreddit description should be between 0 and 500 characters long')]
-    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:create', 'subreddit:write'])]
+    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:create', 'subreddit:write','post:read'])]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt;
 
     #[ApiProperty(
         security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
@@ -119,6 +116,21 @@ class Community
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $welcomeMessageText = null;
 
+    #[Groups(['subreddit:read','subreddit:read_list','subreddit:create','subreddit:write','post:read'])]
+    #[ORM\Column]
+    private ?bool $isNSFW = false;
+
+    #[ApiProperty(
+        security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
+    )]
+    #[Groups(['subreddit:read','subreddit:read_list'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt;
+
+    #[ApiProperty(
+        security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
+    )]
+    #[Groups(['subreddit:read','subreddit:read_list'])]
     #[ORM\ManyToOne(inversedBy: 'createdSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
@@ -295,6 +307,18 @@ class Community
                 $post->setSubreddit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsNSFW(): ?bool
+    {
+        return $this->isNSFW;
+    }
+
+    public function setIsNSFW(bool $isNSFW): static
+    {
+        $this->isNSFW = $isNSFW;
 
         return $this;
     }

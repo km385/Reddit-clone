@@ -47,6 +47,7 @@ final class CommunityFactory extends ModelFactory
             'name' => self::faker()->unique()->text(rand(5, 21)),
             'description' => self::faker()->paragraph(),
             'sendWelcomeMessage' => self::faker()->boolean(),
+            'isNSFW' => self::faker()->boolean(),
             'status' => self::faker()->randomElement([
                 Community::STATUS_SUBRE_PRIVATE,
                 Community::STATUS_SUBRE_RESTRICTED,
