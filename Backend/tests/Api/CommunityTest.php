@@ -5,10 +5,10 @@ namespace App\Tests\Api;
 use App\Factory\CommunityFactory;
 use App\Factory\MembershipFactory;
 use App\Factory\UserFactory;
-use App\Tests\AbstractAuthenticationTest;
+use App\Tests\ApiAuthenticationHelper;
 use Symfony\Component\HttpFoundation\Response;
 
-class CommunityTest extends AbstractAuthenticationTest
+class CommunityTest extends ApiAuthenticationHelper
 {
     public function testUserCanCreateCommunity(): void
     {

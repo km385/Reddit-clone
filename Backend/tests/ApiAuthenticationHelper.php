@@ -8,7 +8,7 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-abstract class AbstractAuthenticationTest extends ApiTestCase
+abstract class ApiAuthenticationHelper extends ApiTestCase
 {
     private ?string $token = null;
     private ?string $userIRS = null;
