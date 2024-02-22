@@ -17,7 +17,7 @@ class AccessToken
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
 
-    #[ORM\Column(length: 68)]
+    #[ORM\Column(length: 68, unique: true)]
     private ?string $token = null;
 
     // #[ORM\Column]

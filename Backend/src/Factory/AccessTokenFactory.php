@@ -50,6 +50,7 @@ final class AccessTokenFactory extends ModelFactory
     return [
         'ownedBy' => UserFactory::new(),
         'expiresAt' => $expiresAt,
+        'userAddress' => "",
     ];
 }
 
