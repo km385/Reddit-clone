@@ -5,9 +5,7 @@
             <div class="text-sm mt-2 flex items-center gap-1 ">
                 <p class="text-white hover:text-text-blue cursor-pointer">r/shitposting</p>
                 <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
-                <div class="hover:bg-hover-dark hover:rounded-full p-1 cursor-pointer">
-                    <icon-dots />
-                </div>
+                <DotsMenu/>
             </div>
             <div class="text-white text-xl">Mam dosyć</div>
             <div class="">
@@ -32,9 +30,7 @@
     </div>
 </template>
 <script setup lang="ts">
-
-import IconDots from "@/components/icons/IconDots.vue";
-
 import PostControls from "@/components/post/PostControls.vue";
+import DotsMenu from "@/components/post/DotsMenu.vue";
 
 </script>

@@ -32,7 +32,7 @@ function handleNav(nextComponentName:string) {
     isLoginScreen.value = nextComponentName === 'login';
     isRegisterScreen.value = nextComponentName === 'signup';
 
-};
+}
 </script>
 
 <template>
