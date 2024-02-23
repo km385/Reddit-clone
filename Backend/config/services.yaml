@@ -25,6 +25,3 @@ services:
     App\State\PasswordHasher:
         bind:
             $processor: '@api_platform.doctrine.orm.state.persist_processor'
-    App\State\CommunityCreatorSetter:
-        bind:
-            $processor: '@api_platform.doctrine.orm.state.persist_processor'

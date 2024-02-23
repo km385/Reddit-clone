@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\CommunityRepository;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use App\State\CommunityCreatorSetter;
+use App\State\CommunityStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,12 +32,13 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: ['groups' => ['subreddit:read_list']]
         ),
         new Post(
-            processor: CommunityCreatorSetter::class,
+            processor: CommunityStateProcessor::class,
             denormalizationContext: ['groups' => ['subreddit:create']],
             security: "is_authenticated()",
             securityMessage: "Only logged-in users can create a subreddit.",
         ),
         new Patch(
+            processor: CommunityStateProcessor::class,
             security: "is_granted('ROLE_REDDIT_ADMIN') or object.getCreator() == user",
             securityMessage: "Only owner of the subreddit can modify it.",
         ),
@@ -87,7 +88,7 @@ class Community
     private ?string $name = null;
 
     #[Assert\Length(min: 0, max: 500, maxMessage: 'Subreddit description should be between 0 and 500 characters long')]
-    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:create', 'subreddit:write','post:read'])]
+    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:create', 'subreddit:write', 'post:read'])]
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
 
@@ -116,21 +117,21 @@ class Community
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $welcomeMessageText = null;
 
-    #[Groups(['subreddit:read','subreddit:read_list','subreddit:create','subreddit:write','post:read'])]
+    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:create', 'subreddit:write', 'post:read'])]
     #[ORM\Column]
     private ?bool $isNSFW = false;
 
     #[ApiProperty(
         security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
-    #[Groups(['subreddit:read','subreddit:read_list'])]
+    #[Groups(['subreddit:read', 'subreddit:read_list'])]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
 
     #[ApiProperty(
         security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
-    #[Groups(['subreddit:read','subreddit:read_list'])]
+    #[Groups(['subreddit:read', 'subreddit:read_list'])]
     #[ORM\ManyToOne(inversedBy: 'createdSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
