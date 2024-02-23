@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send JSON POST Request</title>
+</head>
+<body>
+    <h1>Send JSON POST Request</h1>
+    <form id="jsonForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="token">Token:</label>
+        <input type="text" id="token" name="token"><br><br>
+        
+        <button type="button" onclick="sendJson()">Login</button> <button style="margin-left:2px;" type="button" onclick="checkToken()">Check Token</button>
+        
+    </form>
+    <br><br><br>
+    <div id="result"></div><br>
+    <div id="response"></div>
+
+
+    <script>
+        function sendJson() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const data = {
+                username: username,
+                password: password
+            };
+            const url = 'login_json';
+
+            // Send the JSON POST request
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed with status ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response:', data);
+                // Store the token in the hidden input field
+                document.getElementById('token').value = data.token;
+                document.getElementById('result').innerText = 'Login Successful';
+                document.getElementById('response').innerHTML = '<strong>Token:</strong> ' + data.token
+                     + '<br><strong>User Login:</strong> ' + data.login
+                     + '<br><strong>User IRS:</strong> ' + data.IRS;
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                document.getElementById('result').innerText = 'Login Failed: ' + error.message; 
+                document.getElementById('response').innerHTML = "";
+            });
+        }
+
+        function checkToken() {
+            const authToken = document.getElementById('token').value; // Retrieve the token from the hidden input field
+            const url = 'https://localhost/api/users?page=1';
+
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/ld+json',
+                    'Authorization': 'Bearer ' + authToken
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed with status ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Token Check Response:', data);
+                const users = data['hydra:member']; // Extracting only the 'hydra:member' array
+                document.getElementById('result').innerHTML = '<strong>Token is valid.</strong>';
+
+                // Create a list to contain the user information
+                const userList = document.createElement('ul');
+                userList.classList.add('user-list');
+
+                // Populate the list with user information
+                users.forEach(user => {
+                    const userItem = document.createElement('li');
+                    userItem.innerHTML = `
+                        <strong>Nickname:</strong> ${user.nickname}<br>
+                        <strong>Email:</strong> ${user.email}<br>
+                        <strong>Login:</strong> ${user.login}<br>
+                        <strong>Birthday:</strong> ${user.birthday}<br>
+                        <strong>Joined Communities:</strong> ${user.joinedCommunities.map(community => community.community)}<br>
+                        <strong>Posts:</strong> ${user.posts}<br>
+                        <strong>Comments:</strong> ${user.comments}<br>
+                    `;
+                    userList.appendChild(userItem);
+                });
+
+                // Append the list to the response container
+                document.getElementById('response').appendChild(userList);
+            })
+            .catch(error => {
+                console.error('There was a problem with the token check:', error);
+                document.getElementById('result').innerText = 'Token Check Failed: ' + error.message; 
+                document.getElementById('response').innerHTML = "";
+            });
+        }
+    </script>
+</body>
+</html>

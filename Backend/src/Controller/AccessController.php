@@ -15,6 +15,12 @@ use App\Repository\AccessTokenRepository;
 
 class AccessController extends AbstractController
 {
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(): Response
+    {
+        return $this->render('authentication/login.html.twig');
+    }
+    
     #[Route(
         path: '/login_json',
         name: 'json_app_login',
