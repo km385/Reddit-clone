@@ -7,25 +7,50 @@ use App\Repository\MembershipRepository;
 use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Delete;
-use App\State\MembershipStateProcessor;
+use ApiPlatform\Metadata\Link;
+use App\State\MembershipPersistStateProcessor;
+use App\State\MembershipRemoveStateProcessor;
+use App\State\CommunityStateProvider;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-#[UniqueEntity(fields: ['subreddit', 'member'], message: "You are already member of this subreddit.")]
 #[ORM\Entity(repositoryClass: MembershipRepository::class)]
 #[ApiResource(
     description: "A representation of a single user being a member of given subreddit.",
     operations: [
         new Post(
-            processor: MembershipStateProcessor::class,
+            uriTemplate: '/subreddits/{subreddit_id}/join.{_format}',
+            uriVariables: [
+                'subreddit_id' => new Link(
+                    fromClass: Community::class,
+                    fromProperty: 'members',
+                ),
+            ],
+            security: "is_authenticated()",
+            securityMessage: "Only logged-in users can join a subreddit.",
+            denormalizationContext: ['groups' => ['membership:create']],
+            input: Community::class,
+            provider: CommunityStateProvider::class,
+            processor: MembershipPersistStateProcessor::class,
         ),
         new Delete(
-            processor: MembershipStateProcessor::class,
+            uriTemplate: '/subreddits/{subreddit_id}/leave',
+            uriVariables: [
+                'subreddit_id' => new Link(
+                    fromClass: Community::class,
+                    fromProperty: 'members'
+                ),
+            ],
+            security: "is_authenticated()",
+            securityMessage: "Only logged-in users can leave a subreddit.",
+            input: Community::class,
+            provider: CommunityStateProvider::class,
+            processor: MembershipRemoveStateProcessor::class,
         ),
     ],
 )]
+#[UniqueEntity(fields: ['subreddit', 'member'], message: "You are already member of this subreddit.")]
 class Membership
 {
     #[ORM\Id]
@@ -36,12 +61,10 @@ class Membership
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
 
-    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Community $subreddit = null;
 
-    #[Assert\NotBlank]
     #[ORM\ManyToOne(inversedBy: 'joinedSubreddits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $member = null;
@@ -59,6 +82,17 @@ class Membership
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Returns the difference in seconds between the creation date and now.
+     *
+     * @return int The difference in seconds
+     */
+    public function getCreatedAtInSeconds(): ?int
+    {
+        $now = new \DateTime();
+        return ($now->getTimestamp() - $this->createdAt->getTimestamp());
     }
 
     public function getSubreddit(): ?Community
