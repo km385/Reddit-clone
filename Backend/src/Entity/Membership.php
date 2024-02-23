@@ -5,10 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MembershipRepository;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Delete;
+use App\State\MembershipStateProcessor;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,10 +18,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     description: "A representation of a single user being a member of given subreddit.",
     operations: [
-        new Get,
-        //new GetCollection,
-        new Post,
-        new Delete,
+        new Post(
+            processor: MembershipStateProcessor::class,
+        ),
+        new Delete(
+            processor: MembershipStateProcessor::class,
+        ),
     ],
 )]
 class Membership

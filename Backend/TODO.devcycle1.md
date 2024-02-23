@@ -93,6 +93,7 @@
 |                          | Tests                          | ✅ Done|
 
 ## Notes:
+- add to readme info that you have to leave database login or you clog connection
 - split readme into external files with links
 - rename modifiedAt to updatedAt
 - add createdAt and modifiedAt in seconds when needed 
@@ -110,7 +111,6 @@
          - comments
     - karama system
     - Subreddit functionalities:
-        - make number of users a not dynamic field thats updated on members changes
         - change from creator to moderator collection and hide creator field
         - hide nsfw communities for not authorized users and with settings to no nswf
         - status:

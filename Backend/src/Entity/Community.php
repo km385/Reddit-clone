@@ -55,7 +55,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     paginationItemsPerPage: 25,
 )]
-#[ApiFilter(OrderFilter::class, properties: ['id', 'name'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'totalMembers'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'ipartial'])]
 #[UniqueEntity(fields: ['name'], message: 'There is already a subreddit with this name')]
 class Community
@@ -142,6 +142,10 @@ class Community
     #[ORM\OneToMany(mappedBy: 'subreddit', targetEntity: Thread::class, orphanRemoval: true)]
     private Collection $posts;
 
+    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:write', 'subreddit:create', 'post:read'])]
+    #[ORM\Column(nullable: false)]
+    private ?int $totalMembers = 0;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -183,13 +187,24 @@ class Community
         return $this->createdAt;
     }
 
-    /**
-     * @return int current number of users that are members of this community
-     */
-    #[Groups(['subreddit:read', 'subreddit:read_list'])]
     public function getTotalMembers(): ?int
     {
-        return $this->members->count();
+        return $this->totalMembers;
+    }
+
+    /**
+     * This method increments or decrements amount of members
+     * @param bool $isDelete If true, total members will be decremented; otherwise, it will be incremented.
+     * 
+     * @return int|null Updated amount of members after operation, null if it cannot be determined.
+     */
+    public function setTotalMembers(bool $isDelete = false): ?int
+    {
+        // Update the total members count based on the operation (increment or decrement)
+        $this->totalMembers += $isDelete ? -1 : 1;
+
+        // Return the updated total members count
+        return $this->totalMembers;
     }
 
     public function getStatus(): ?string
@@ -249,6 +264,7 @@ class Community
             $membership = new Membership();
             $membership->setMember($creator);
             $membership->setSubreddit($this);
+            $this->setTotalMembers();
             $this->members->add($membership);
         }
 
@@ -269,6 +285,7 @@ class Community
             $this->members->add($member);
             $member->setSubreddit($this);
         }
+
         return $this;
     }
 

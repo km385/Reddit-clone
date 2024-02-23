@@ -54,8 +54,9 @@ final class MembershipFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this
-            // ->afterInstantiate(function(Membership $membership): void {})
-        ;
+            ->afterInstantiate(function(Membership $membership): void {
+                $membership->getSubreddit()->setTotalMembers();
+            });
     }
 
     protected static function getClass(): string
