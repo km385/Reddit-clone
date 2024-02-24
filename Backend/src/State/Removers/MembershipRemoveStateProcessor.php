@@ -42,7 +42,7 @@ final readonly class MembershipRemoveStateProcessor implements ProcessorInterfac
             }
 
             // Decrease amount of members inside community
-            $data->setTotalMembers(isDelete: true);
+            $data->setAmountOfMembers(isDelete: true);
             $this->entityManager->persist($data);
             $this->entityManager->flush();
 

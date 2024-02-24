@@ -44,7 +44,7 @@ final readonly class MembershipPersistStateProcessor implements ProcessorInterfa
             ->setSubreddit($data);
 
         // Increase amount of members inside community
-        $data->setTotalMembers(isDelete: false);
+        $data->setAmountOfMembers(isDelete: false);
         $this->entityManager->persist($data);
         $this->entityManager->flush();
 

@@ -55,7 +55,7 @@ final class MembershipFactory extends ModelFactory
     {
         return $this
             ->afterInstantiate(function(Membership $membership): void {
-                $membership->getSubreddit()->setTotalMembers();
+                $membership->getSubreddit()->setAmountOfMembers();
             });
     }
 

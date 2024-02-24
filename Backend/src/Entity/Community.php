@@ -55,7 +55,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     paginationItemsPerPage: 25,
 )]
-#[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'totalMembers'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'AmountOfMembers'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'ipartial'])]
 #[UniqueEntity(fields: ['name'], message: 'There is already a subreddit with this name')]
 class Community
@@ -121,6 +121,10 @@ class Community
     #[ORM\Column]
     private ?bool $isNSFW = false;
 
+    #[Groups(['subreddit:read', 'subreddit:read_list', 'post:read'])]
+    #[ORM\Column(nullable: false)]
+    private ?int $AmountOfMembers = 0;
+
     #[ApiProperty(
         security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
@@ -141,10 +145,6 @@ class Community
 
     #[ORM\OneToMany(mappedBy: 'subreddit', targetEntity: Thread::class, orphanRemoval: true)]
     private Collection $posts;
-
-    #[Groups(['subreddit:read', 'subreddit:read_list', 'subreddit:write', 'subreddit:create', 'post:read'])]
-    #[ORM\Column(nullable: false)]
-    private ?int $totalMembers = 0;
 
     public function __construct()
     {
@@ -187,9 +187,20 @@ class Community
         return $this->createdAt;
     }
 
-    public function getTotalMembers(): ?int
+    /**
+     * Returns the difference in seconds between the creation date and now.
+     *
+     * @return int The difference in seconds
+     */
+    public function getCreatedAtInSeconds(): ?int
     {
-        return $this->totalMembers;
+        $now = new \DateTime();
+        return ($now->getTimestamp() - $this->createdAt->getTimestamp());
+    }
+
+    public function getAmountOfMembers(): ?int
+    {
+        return $this->AmountOfMembers;
     }
 
     /**
@@ -198,13 +209,13 @@ class Community
      * 
      * @return int|null Updated amount of members after operation, null if it cannot be determined.
      */
-    public function setTotalMembers(bool $isDelete = false): ?int
+    public function setAmountOfMembers(bool $isDelete = false): ?int
     {
         // Update the total members count based on the operation (increment or decrement)
-        $this->totalMembers += $isDelete ? -1 : 1;
+        $this->AmountOfMembers += $isDelete ? -1 : 1;
 
         // Return the updated total members count
-        return $this->totalMembers;
+        return $this->AmountOfMembers;
     }
 
     public function getStatus(): ?string
@@ -264,7 +275,7 @@ class Community
             $membership = new Membership();
             $membership->setMember($creator);
             $membership->setSubreddit($this);
-            $this->setTotalMembers();
+            $this->setAmountOfMembers();
             $this->members->add($membership);
         }
 

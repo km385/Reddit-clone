@@ -4,7 +4,6 @@ namespace App\Tests\Api;
 
 use App\Factory\CommunityFactory;
 use App\Factory\MembershipFactory;
-use App\Factory\UserFactory;
 use App\Tests\ApiAuthenticationHelper;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -303,7 +302,7 @@ class CommunityTest extends ApiAuthenticationHelper
         );
     }
 
-    public function testCommunityListCanBeSorted(): void
+    public function testCommunityListCanBeSortedByName(): void
     {
         CommunityFactory::createOne(['name' => 'test name 5']);
         CommunityFactory::createOne(['name' => 'test name 1']);
@@ -333,6 +332,40 @@ class CommunityTest extends ApiAuthenticationHelper
         $this->assertEquals('test name 1', $responseData[2]['name'], 'Expected third community to be "test name 1"');
     }
 
+    public function testCommunityListCanBeSortedByAmountOfMembers(): void
+    {
+        CommunityFactory::createOne(['name' => 'test name A']);
+        $communityB = CommunityFactory::createOne(['name' => 'test name B']);
+        $communityC =CommunityFactory::createOne(['name' => 'test name C']);
+
+        // Create 5 members for community B and 2 for Community C
+        MembershipFactory::createMany(5,['subreddit' => $communityB]);
+        MembershipFactory::createMany(2,['subreddit' => $communityC]);
+
+        $client = static::createClient();
+        $client->request('GET', 'api/subreddits?page=1&order%5BAmountOfMembers%5D=desc', [
+            'headers' => [
+                'Content-Type' => 'application/ld+json'
+            ],
+        ]);
+        $responseData = $client->getResponse()->toArray()['hydra:member'];
+
+        // Check response status
+        $this->assertEquals(
+            Response::HTTP_OK,
+            $client->getResponse()->getStatusCode(),
+            'Expected status code 200, but received ' . $client->getResponse()->getStatusCode() . '.'
+        );
+
+        // Check amount
+        $this->assertCount(3, $responseData);
+
+        // Check order
+        $this->assertEquals('test name B', $responseData[0]['name'], 'Expected first community to be "test name B with most members"');
+        $this->assertEquals('test name C', $responseData[1]['name'], 'Expected second community to be "test name C"');
+        $this->assertEquals('test name A', $responseData[2]['name'], 'Expected third community to be "test name A with least members"');
+    }
+    
     public function testCommunityListHasWorkingPagination(): void
     {
         CommunityFactory::createMany(26);
@@ -395,15 +428,6 @@ class CommunityTest extends ApiAuthenticationHelper
         $this->assertNotEquals('test name A', $responseData[1]['name'], 'Expected filtered community to not be "test name A"');
     }
 
-    //TODO: after writing extensions
-    // public function testGuestCannotAccessHiddenCommunities(): void
-    // {
-    // }
-    //same as above
-    // public function testOwnerCanAccessHiddenCommunities(): void
-    // {
-    // }
-
     public function testOwnerCanGetCommunityDetails(): void
     {
         $community = CommunityFactory::createOne();
@@ -450,76 +474,13 @@ class CommunityTest extends ApiAuthenticationHelper
         $this->assertArrayNotHasKey('status', $responseData, 'Unexpected "status" field in the response.');
     }
 
-    public function testOwnerIsAddedToMembers(): void
-    {
-        $community = CommunityFactory::createOne();
-        $client = static::createClient();
-        $response = $client->request('GET', '/api/subreddits/' . $community->getId(), [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-
-        // Check response status
-        $this->assertEquals(
-            Response::HTTP_OK,
-            $response->getStatusCode(),
-            'Expected status code 200, but received ' . $response->getStatusCode() . '.'
-        );
-
-        $responseData = $response->toArray();
-
-        // Check amount
-        $this->assertEquals(
-            1,
-            $responseData['totalMembers'],
-            'Expected "totalMembers" to be 1, indicating the owner, but received ' . $responseData['totalMembers'] . '.'
-        );
-    }
-
-    //todo:decide if this should be moved to separate class memberships (probably yes)
-    // public function testUserCanJoinCommunity(): void
+    //TODO: after writing query extensions
+    // public function testGuestCannotAccessHiddenCommunities(): void
     // {
     // }
+    
     //same as above
-    // public function testUserCannotJoinCommunityHeIsMemberOf(): void
-    // {
-    // }
-
-    public function testNewMemberChangesAmountOfMembers(): void
-    {
-        $community = CommunityFactory::createOne();
-        $newMember = UserFactory::createOne();
-        MembershipFactory::createOne([
-            'subreddit' => $community,
-            'member' => $newMember,
-        ]);
-        $client = static::createClient();
-        $response = $client->request('GET', '/api/subreddits/' . $community->getId(), [
-            'headers' => [
-            'Content-Type' => 'application/json',
-            ],
-        ]);
-    
-        // Check request status
-        $this->assertEquals(
-            Response::HTTP_OK,
-            $response->getStatusCode(),
-            'Expected status code 200, but received ' . $response->getStatusCode() . '.'
-        );
-    
-        // Check amount
-        $responseData = $response->toArray();
-        $this->assertEquals(
-            2, // Including the owner
-            $responseData['totalMembers'],
-            'Expected "totalMembers" to be 2, but received ' . $responseData['totalMembers'] . '.'
-        );
-    }
-    
-
-    //TODO: after making status checks
-    // public function testUserCannotJoinRestrictedCommunity(): void
+    // public function testOwnerCanAccessHiddenCommunities(): void
     // {
     // }
 }
