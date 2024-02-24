@@ -28,14 +28,16 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         $accessTokens = $this->repository->findBy([
             "token" => $token
         ]);
+        
+        if (count($accessTokens) < 1) {
+            throw new HttpException(404, message:'No such Access token found.');
+        }
+
         if (count($accessTokens) !== 1) {
             throw new HttpException(500, message:'Unknown error occured during searching for token.');
         }
         $accessToken = $accessTokens[0];
 
-        if (null === $accessToken) {
-            throw new UnauthorizedHttpException(401, message:'No such Access token found.');
-        }
         switch ($accessToken->isValid($userIp)) {
             case '0': // Session is valid
                 return new UserBadge($accessToken->getOwnedBy()->getUserIdentifier());
