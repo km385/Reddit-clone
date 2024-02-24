@@ -1,6 +1,6 @@
 <?php
 
-namespace App\State;
+namespace App\State\Removers;
 
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use App\Entity\Membership;

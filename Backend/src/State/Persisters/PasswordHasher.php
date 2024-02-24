@@ -1,15 +1,17 @@
 <?php
 
-namespace App\State;
+namespace App\State\Persisters;
 
 use App\Entity\User;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final readonly class PasswordHasher implements ProcessorInterface
 {
     public function __construct(
+        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
         private ProcessorInterface $processor,
         private UserPasswordHasherInterface $passwordHasher
     ) {

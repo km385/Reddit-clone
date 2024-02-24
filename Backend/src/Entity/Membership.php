@@ -8,9 +8,9 @@ use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Link;
-use App\State\MembershipPersistStateProcessor;
-use App\State\MembershipRemoveStateProcessor;
-use App\State\CommunityStateProvider;
+use App\State\Persisters\MembershipPersistStateProcessor;
+use App\State\Removers\MembershipRemoveStateProcessor;
+use App\State\Providers\CommunityStateProvider;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -35,7 +35,7 @@ use Doctrine\ORM\Mapping as ORM;
             processor: MembershipPersistStateProcessor::class,
         ),
         new Delete(
-            uriTemplate: '/subreddits/{subreddit_id}/leave',
+            uriTemplate: '/subreddits/{subreddit_id}/leave.{_format}',
             uriVariables: [
                 'subreddit_id' => new Link(
                     fromClass: Community::class,

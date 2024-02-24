@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\CommunityRepository;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use App\State\CommunityStateProcessor;
+use App\State\Persisters\CommunityStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

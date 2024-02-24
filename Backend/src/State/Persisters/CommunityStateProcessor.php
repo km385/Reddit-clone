@@ -1,6 +1,6 @@
 <?php
 
-namespace App\State;
+namespace App\State\Persisters;
 
 use App\Entity\Community;
 use ApiPlatform\Metadata\Operation;
