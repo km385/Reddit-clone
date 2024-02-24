@@ -56,15 +56,15 @@
 |                          | Adding Factory                                             | ✅ Done  |
 |                          | Securing Requests                                          | ✅ Done  |
 |                          | Tests                                                      | ✅ Done  |
-| Membership Table (User-Commu) |                      | ❌ -Incomplete- ❌|
+| Membership Table (User-Commu) |                      | 🎉 -Closed- 🎉|
 |                          | Implementing `Memberships` entity     | ✅ Done    |
 |                          | Adding Necessary Fields               | ✅ Done    |
 |                          | Adding Filtrations                    | ✅ Done    |
 |                          | Adding Normalization Groups           | ✅ Done    |
 |                          | Adding Embed                          | ✅ Done    |
 |                          | Adding Factory                        | ✅ Done    |
-|                          | Securing Requests                     | ⭕ Not Started  |
-|                          | Tests                                 | ⭕ Not Started  |
+|                          | Securing Requests                     | ✅ Done  |
+|                          | Tests                                 | ✅ Done  |
 | Thread (Post) Table      |                                        | ❌ -Incomplete- ❌|
 |                          | Implementing `Posts` entity            | ✅ Done  |
 |                          | Adding status                          | ✅ Done          |
@@ -93,6 +93,8 @@
 |                          | Tests                          | ✅ Done|
 
 ## Notes:
+
+- standardize test names to same convention
 - add to readme info that you have to leave database login or you clog connection
 - split readme into external files with links
 - rename modifiedAt to updatedAt
@@ -103,6 +105,8 @@
     `Symfony php bin/phpunit --verbose --testdox  --filter=testCommunityListHasWorkingPagination`
 
 - To do in following steps:
+    - admin users that see hidden fields
+    - make post auto transfer to subcomments from parentcomments
     - move auth logic from symfony controllers to api platform
     - add rate limiter (https://github.com/IndraGunawan/api-rate-limit-bundle)
     - add admin user method in factories
@@ -132,20 +136,3 @@
         - send message if needed when user joisn subreddit
         - allow customization of the messege
     - current activity system
-    
-##Use later:
-
-```
-   /**
-     * Returns the difference in seconds between the creation date and now.
-     *
-     * @return int The difference in seconds
-     */
-    
-    #[Groups(['subreddit:read'])]
-    public function getCreatedAtInSeconds(): ?int
-    {
-        $now = new \DateTime();
-        return ($now->getTimestamp() - $this->createdAt->getTimestamp());
-    }
-```

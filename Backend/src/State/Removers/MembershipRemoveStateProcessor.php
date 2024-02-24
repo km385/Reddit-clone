@@ -10,6 +10,7 @@ use ApiPlatform\State\ProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final readonly class MembershipRemoveStateProcessor implements ProcessorInterface
 {
@@ -38,7 +39,7 @@ final readonly class MembershipRemoveStateProcessor implements ProcessorInterfac
             ]);
 
             if ($existingMembership === null) {
-                throw new \Exception('You are not member of this subreddit.');
+                throw new NotFoundHttpException('You are not member of this subreddit.');
             }
 
             // Decrease amount of members inside community

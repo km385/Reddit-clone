@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Community;
 use App\Repository\CommunityRepository;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommunityStateProvider implements ProviderInterface
 {
@@ -17,22 +19,22 @@ class CommunityStateProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): Community
     {
         if (!isset($uriVariables['subreddit_id'])) {
-            throw new \Exception('Subreddit id was not provided.', 400);
+            throw new NotFoundHttpException('Subreddit id was not provided.', code:400);
         }
 
         $DATA = $this->repository->findBy([
             'id' => $uriVariables['subreddit_id']
         ]);
 
-        if (count($DATA) === 1) {
+        if (count($DATA) == 1) {
             return $DATA[0];
-            
+
         }
 
         if (count($DATA) > 0) {
-            throw new \Exception('Multiple Subreddits with the same id found.', 500);
+            throw new HttpException('Multiple Subreddits with the same id found.', 500);
         }
 
-        throw new \Exception('Subreddit with the given id not found.', 404);
+        throw new NotFoundHttpException(message: 'Subreddit with the given id not found.', code: 404);
     }
 }

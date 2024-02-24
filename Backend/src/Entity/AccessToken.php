@@ -115,20 +115,6 @@ class AccessToken
         return 0;
     }
 
-    /**
-     * Validates expiration date of the token.
-     *
-     * @return bool True if date is future or null, false otherwise
-     */
-    public function isExpiresAtValid(): bool
-    {
-        if ($this->expiresAt === null) {
-            return true;
-        }
-
-        return $this->expiresAt > new \DateTimeImmutable();
-    }
-
     public function getUserAddress(): ?string
     {
         return $this->userAddress;

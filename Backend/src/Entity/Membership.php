@@ -30,6 +30,8 @@ use Doctrine\ORM\Mapping as ORM;
             security: "is_authenticated()",
             securityMessage: "Only logged-in users can join a subreddit.",
             denormalizationContext: ['groups' => ['membership:create']],
+            openapiContext: ['requestBody' => false],
+            deserialize: false,
             input: Community::class,
             provider: CommunityStateProvider::class,
             processor: MembershipPersistStateProcessor::class,

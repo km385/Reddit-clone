@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Entity\User;
 use App\Factory\UserFactory;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
@@ -17,7 +18,7 @@ abstract class ApiAuthenticationHelper extends ApiTestCase
     use ResetDatabase;
     use Factories;
 
-    protected function login(User $user = null): ?string
+    protected function login(User|Proxy $user = null): ?string
     {
         if ($user === null) {
             $user = UserFactory::createOne();
