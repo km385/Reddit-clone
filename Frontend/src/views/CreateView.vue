@@ -17,18 +17,30 @@ function closeMenu(){
 
 
 onMounted(() => {
-    // when resolution / zoom is different it might not work as intended
-    document.body.style.overflowY = 'hidden'
-
+    calculateMinHeight()
+    window.addEventListener('resize', calculateMinHeight)
 })
 
 onBeforeUnmount(() => {
-    document.body.style.overflowY = 'visible'
+    window.removeEventListener('resize', calculateMinHeight)
 })
+
+const minHeight = ref("")
+
+function calculateMinHeight() {
+    const headerHeight = document.querySelector('header')?.offsetHeight;
+    if(!headerHeight) {
+        minHeight.value = '100vh'
+        return
+    }
+    const windowHeight = window.innerHeight;
+    minHeight.value = `calc(${windowHeight}px - ${headerHeight}px)`;
+}
 </script>
 
 <template>
-    <div class="mt-8 text-white min-h-screen bg-black flex justify-center">
+<!--    28px is a precise navbar height-->
+    <div :style="{minHeight: minHeight}" class="mt-[28px] text-white bg-black flex justify-center">
         <div class="flex flex-col items-center w-[740px] mt-12">
             <!--        dropdown-->
             <div class="self-start w-fit bg-[#1a1a1b] border border-[#343536] rounded-sm mb-2 relative"
