@@ -2,7 +2,7 @@
 
 </script>
 <template>
-    <div class="py-3" >
+    <div class="py-3" @click.stop >
         <div v-if="false">
             <p class="line-clamp-[6] text-white">
                 Mam 26 lat. Magistra na karku. Do wczoraj marzenia. Tyle lat nauki, podczas studiów dodatkowe kursy.
@@ -19,10 +19,15 @@
                 wszystko co mogło pójść źle idzie źle. Nie wiem co mam dalej robić
             </p>
         </div>
-        <div class="border border-gray-600 rounded-xl flex justify-center" v-else>
+        <div class="border border-gray-600 rounded-xl flex justify-center" v-else-if="true">
             <img class="object-contain max-h-[550px]"
                  src="https://preview.redd.it/raniuszek-ponad-po%C5%82owa-zwierz%C4%99cia-to-ogon-ptasi-poniedzia%C5%82ek-v0-ahk5h64q0ijc1.jpeg?width=640&crop=smart&auto=webp&s=2f117f11d02397b3ec3e6b85fc25ae6dc273f0d3"
                  alt="image">
+        </div>
+        <div v-else>
+            <video controls id="video-controls" class="controls" data-state="hidden">
+                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+            </video>
         </div>
     </div>
 </template>
