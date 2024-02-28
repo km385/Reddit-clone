@@ -8,7 +8,7 @@ const showCommunityInfo = ref(false)
 
 let hideTimeout:number|undefined
 function hideCommunityInfo() {
-    hideTimeout = setTimeout(() => {
+    hideTimeout = window.setTimeout(() => {
         showCommunityInfo.value = false
     }, 800)
 }
@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
         </div>
 
         <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
-        <DotsMenu/>
+        <DotsMenu class="z-10"/>
     </div>
 </template>
 

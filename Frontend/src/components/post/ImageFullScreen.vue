@@ -22,7 +22,7 @@ onBeforeUnmount(() => {
 </script>
 <template>
         <div
-            :style="{ 'background-image': `url(${props.url})`}"
+            :style="{ 'background-image': `url(${props.url})`, 'background-size': '100% 100%'}"
             @click.stop class="fixed inset-0 bg-gray-400 z-[9999] cursor-default">
             <icon-x @click="emit('close')"
                     class="z-10 fixed top-2 right-2 p-2 bg-black text-white rounded-full w-10 h-10 cursor-pointer"/>

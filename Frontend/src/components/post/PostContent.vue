@@ -24,14 +24,15 @@ const isImageShown = ref(false)
                 wszystko co mogło pójść źle idzie źle. Nie wiem co mam dalej robić
             </p>
         </div>
-        <div @click="isImageShown = true" class="border border-gray-600 rounded-xl flex justify-center" v-else-if="true">
-            <img class="object-contain max-h-[550px]"
-                 :src="imageSrc"
-                 alt="image">
-            <transition name="slide-fade">
-                <ImageFullScreen v-if="isImageShown" @close="isImageShown = false" :url="imageSrc"/>
-            </transition>
-        </div>
+            <div :style="{'background-image': `url(${imageSrc})`, 'background-size': '100% 100%'}" @click="isImageShown = true"
+                 class="border border-gray-600 rounded-xl max-h-[550px]" v-else-if="true">
+                <img class="object-contain max-h-[550px] w-full mx-auto rounded-xl backdrop-blur-3xl "
+                     :src="imageSrc"
+                     alt="image">
+                <transition name="slide-fade">
+                    <ImageFullScreen v-if="isImageShown" @close="isImageShown = false" :url="imageSrc"/>
+                </transition>
+            </div>
         <div v-else>
             <video controls id="video-controls" class="controls" data-state="hidden">
                 <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
