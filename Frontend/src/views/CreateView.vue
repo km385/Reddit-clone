@@ -117,7 +117,13 @@ function calculateMinHeight() {
                             </div>
                         </div>
                     </div>
-                    <div v-else-if="postType === 'link'">link</div>
+                    <div v-else-if="postType === 'link'">
+                        <textarea
+                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                            class="min-h-36 rounded-xl pl-4 w-full grow bg-[#1a1a1b] outline-0 resize-none border border-[#343536]"
+                            type="text"
+                            placeholder="Url" v-model="text"></textarea>
+                    </div>
                     <div v-else-if="postType === 'post'">
                         <div
                             class="flex flex-col border border-[#343536] rounded-lg focus-within:border focus-within:border-white">
