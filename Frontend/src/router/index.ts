@@ -23,6 +23,11 @@ const router = createRouter({
                     name: 'community',
                     component: () => import('../views/CommunityView.vue'),
                 },
+                {
+                    path: '/user/:username',
+                    name: 'userProfile',
+                    component: () => import('../views/UserProfileView.vue')
+                }
             ]
         },
         {

@@ -21,17 +21,19 @@ const showLoginScreen = ref(false)
                  class="absolute bg-main-bg right-0 top-8 shadow-lg shadow-black select-none w-[260px] py-2">
                 <div  class="flex flex-col divide-y divide-[#273133] gap-2">
                     <div class="flex flex-col">
-                        <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">
-                            <div class="flex gap-2">
-                                <div class="w-8 flex ">
-                                    <icon-user/>
-                                </div>
-                                <div class="flex flex-col">
-                                    <p class="text-sm">View Profile</p>
-                                    <p class="text-xs text-gray-400">u/username</p>
+                        <router-link :to="{name: 'userProfile', params: { username: 'user123'}}">
+                            <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">
+                                <div class="flex gap-2">
+                                    <div class="w-8 flex ">
+                                        <icon-user/>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <p class="text-sm">View Profile</p>
+                                        <p class="text-xs text-gray-400">u/username</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </router-link>
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Edit Avatar</div>
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Contributor Program</div>
                         <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Dark Mode</div>
