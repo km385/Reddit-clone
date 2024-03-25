@@ -72,8 +72,8 @@ class CommunityTest extends ApiAuthenticationHelper
         $responseData = json_decode($response->getContent(false), true);
         $this->assertEquals(
             "Full authentication is required to access this resource.",
-            $responseData['hydra:description'],
-            'Expected error about authentication, but got: ' . ($responseData['hydra:description'] ?? '""')
+            $responseData['detail'],
+            'Expected error about authentication, but got: ' . ($responseData['detail'] ?? '""')
         );
     }
 
@@ -108,8 +108,8 @@ class CommunityTest extends ApiAuthenticationHelper
         $responseData = json_decode($response->getContent(false), true);
         $this->assertEquals(
             "name: There is already a subreddit with this name",
-            $responseData['hydra:description'],
-            'Expected error message about duplicate name, but got: ' . ($responseData['hydra:description'] ?? '""')
+            $responseData['detail'],
+            'Expected error message about duplicate name, but got: ' . ($responseData['detail'] ?? '""')
         );
     }
 
@@ -185,8 +185,8 @@ class CommunityTest extends ApiAuthenticationHelper
         $responseData = json_decode($response->getContent(false), true);
         $this->assertEquals(
             "Full authentication is required to access this resource.",
-            $responseData['hydra:description'],
-            'Expected error about authentication, but got: ' . ($responseData['hydra:description'] ?? '""')
+            $responseData['detail'],
+            'Expected error about authentication, but got: ' . ($responseData['detail'] ?? '""')
         );
 
         // Check amount
@@ -297,8 +297,8 @@ class CommunityTest extends ApiAuthenticationHelper
         $responseData = json_decode($response->getContent(false), true);
         $this->assertEquals(
             "name: There is already a subreddit with this name",
-            $responseData['hydra:description'],
-            'Expected error message about duplicate name, but got: ' . ($responseData['hydra:description'] ?? '""')
+            $responseData['detail'],
+            'Expected error message about duplicate name, but got: ' . ($responseData['detail'] ?? '""')
         );
     }
 

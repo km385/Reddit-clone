@@ -135,9 +135,9 @@ class Community
     #[ApiProperty(
         security: 'is_granted("ROLE_REDDIT_ADMIN") or is_granted("SUBRE_VIEW", object)',
     )]
-    #[Groups(['subreddit:read', 'subreddit:read_list'])]
+
     #[ORM\ManyToOne(inversedBy: 'createdSubreddits')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'subreddit', targetEntity: Membership::class, orphanRemoval: true, cascade: ['persist'])]

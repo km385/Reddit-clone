@@ -84,17 +84,13 @@ php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migratio
 - To create and run migrations:
 
   ```sh
-  php bin/console make:migration
-  ```
-
-  ```sh
   php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
   ```
 
 - To generate dummy data with fixtures (Laravel Seeders):
 
   ```sh
-  symfony console doctrine:fixtures:load
+  symfony console doctrine:fixtures:load --no-interaction
   ```
 
 - To drop and recreate the database:

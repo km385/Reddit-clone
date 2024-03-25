@@ -114,6 +114,7 @@ class Comment
 
     #[Groups(['comment:read','comment:create','post:read'])]
     #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
 
     #[Groups(['user:read','comment:create'])]

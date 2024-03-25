@@ -45,13 +45,14 @@ final class UserFactory extends ModelFactory
         // Set login attribute to "login_<random_number>"
         $login = 'login' . '_' . self::faker()->unique()->numberBetween(1, 1000000);
         return [
-            'birthday' => self::faker()->dateTime(),
             'email' => self::faker()->unique()->email(),
             'login' => $login,
-            // Set nickname attribute to login or random string
-            'nickname' => self::faker()->boolean() ? $login : self::faker()->unique()->text(20),
+            // 50% to set nickname to random string
+            'nickname' => self::faker()->boolean() ?: self::faker()->unique()->text(20),
             // Set password attribute to prehashed value of "password"
             'password' => '$2y$13$WIcQGXgUo.57nXa8PWXFe.jqOeTAWzil0tzNwcJKxWpYGRJx9Hn1S',
+            'isNSFW' => self::faker()->boolean(),
+            'description' => self::faker()->boolean() ?: self::faker()->unique()->text(100),
         ];
     }
 

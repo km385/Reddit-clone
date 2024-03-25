@@ -21,9 +21,7 @@ final class Version20240220121455 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE "user_id_seq" INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, nickname VARCHAR(50) NOT NULL, roles JSON DEFAULT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(200) NOT NULL, login VARCHAR(50) NOT NULL, birthday DATE NOT NULL, created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649A188FE64 ON "user" (nickname)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, nickname VARCHAR(50) DEFAULT NULL, description VARCHAR(200) DEFAULT NULL, roles JSON DEFAULT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(200) DEFAULT NULL, login VARCHAR(50) NOT NULL, is_nsfw BOOLEAN NOT NULL, created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void

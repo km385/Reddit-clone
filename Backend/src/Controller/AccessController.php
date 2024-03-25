@@ -33,7 +33,7 @@ class AccessController extends AbstractController
         }
     
         $requestData = json_decode($request->getContent());
-        $rememberMe = isset($requestData->remember_me) && $requestData->remember_me === true ? true : false;
+        $rememberMe = isset($requestData->remember_me) && $requestData->remember_me == true ? true : false;
 
         $authenticationToken = (new AccessToken())
             ->setOwnedBy($user)
@@ -68,7 +68,7 @@ class AccessController extends AbstractController
         $accessToken = $accessTokens[0];
 
         $requestData = json_decode($request->getContent());
-        if(isset($requestData->logout_all) && $requestData->logout_all === true){
+        if(isset($requestData->logout_all) && $requestData->logout_all == true){
             $tokensWithSameOwner = $repository->findBy(['ownedBy' => $accessToken->getOwnedBy()]);
             foreach ($tokensWithSameOwner as $token) {
                 $entityManager->remove($token);

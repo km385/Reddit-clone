@@ -15,32 +15,36 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
-        // Create 50 random users
-        $numberOf = 50;
+        // Create 100 random users
+        $numberOf = 100;
         UserFactory::createMany($numberOf);
+        $manager->flush();
+        $manager->clear();
         echo "   > $numberOf User entities successfully created.\n";
 
-        // Create 5 subreddits created by some one the users
-        $numberOf = 5;
-        $communities = CommunityFactory::createMany($numberOf, function () {
+
+        // Create 10 subreddits created by some one the users
+        $numberOf = 10;
+        CommunityFactory::createMany($numberOf, function () {
             return [
                 'creator' => UserFactory::random(),
             ];
         });
-        $numberOf = count($communities);
+        $manager->flush();
+        $manager->clear();
         echo "   > $numberOf Subreddit entities successfully created.\n";
 
+
         /**
-         * Generate 100 random memberships with a limit on consecutive attempts.
+         * Generate 300 random memberships with a limit on consecutive attempts.
          * If max consecutive attempts are reached, duplicates will be allowed.
          */
+        $numberOf = 300;
         $existing_pairs = array();
-        $max_attempts = 250;
+        $max_attempts = 600;
         $allow_duplicate = false;
-        $numberOfMemberships = 100; 
 
-        MembershipFactory::createMany($numberOfMemberships, function () use (&$existing_pairs, $max_attempts, &$allow_duplicate) {
+        MembershipFactory::createMany($numberOf, function () use (&$existing_pairs, $max_attempts, &$allow_duplicate) {
             $attempts = 0;
 
             while (!$allow_duplicate) {
@@ -66,10 +70,13 @@ class AppFixtures extends Fixture
                 'member' => UserFactory::random(),
             ];
         });
-        echo "   > $numberOfMemberships Membership entities successfully created.\n";
+        $manager->flush();
+        $manager->clear();
+        echo "   > $numberOf Membership entities successfully created.\n";
 
-        // Generate 200 random posts based on previously generated memberships.
-        $numberOf = 200; 
+
+        // Generate 100 random posts based on previously generated memberships.
+        $numberOf = 100;
         ThreadFactory::createMany($numberOf, function () {
             $membership = MembershipFactory::random();
             return [
@@ -77,21 +84,27 @@ class AppFixtures extends Fixture
                 'subreddit' => $membership->getSubreddit(),
             ];
         });
+        $manager->flush();
+        $manager->clear();
         echo "   > $numberOf Post entities sucesfully created.\n";
 
-        // Generate 200 random comments.
-        //TODO: look into making comments generation fit the right communities without overloading memory
-        $numberOf = 200; 
+
+        // Generate 250 random comments.
+        //todo: fix parent/sub comments
+        $numberOf = 250;
         CommentFactory::createMany($numberOf, function () {
             return [
                 'author' => UserFactory::random(),
                 'post' => ThreadFactory::random(),
             ];
         });
+        $manager->flush();
+        $manager->clear();
         echo "   > $numberOf Comments entities sucesfully created.\n";
 
+        
         // Generate 50 access tokens.
-        $numberOf = 50; 
+        $numberOf = 50;
         AccessTokenFactory::createMany($numberOf, function () {
             return [
                 'ownedBy' => UserFactory::random(),
