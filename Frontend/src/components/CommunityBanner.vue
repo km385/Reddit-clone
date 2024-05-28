@@ -10,7 +10,7 @@ import IconAdd from "@/components/icons/IconAdd.vue";
     <div class="w-full">
         <div class="z-30">
             <img class="object-cover h-32 w-full" alt="banner"
-                 src="https://styles.redditmedia.com/t5_38jf0/styles/bannerBackgroundImage_0z3fqd7mkhra1.png">
+                 src="https://styles.redditmedia.com/t5_38jf0/styles/bannerBackgroundImage_4p2s0921o0sc1.png">
         </div>
         <div class="h-16 flex justify-between px-3">
             <div class="flex gap-3  z-20">
