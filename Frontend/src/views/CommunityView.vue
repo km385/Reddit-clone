@@ -1,42 +1,19 @@
 <script setup lang="ts">
 
-import {useRouter} from "vue-router";
-import CommentsMainContent from "@/components/comments/CommentsMainContent.vue";
-import CommentsTextArea from "@/components/comments/CommentsTextArea.vue";
-import CommentPost from "@/components/comments/CommentPost.vue";
-import IconChevronUp from "@/components/icons/IconChevronUp.vue";
+import CommunityBanner from "@/components/CommunityBanner.vue";
 
-const router = useRouter()
-function goBack() {
-    router.back()
-}
+import IconChevronUp from "@/components/icons/IconChevronUp.vue";
+import PostFeed from "@/components/PostFeed.vue";
 </script>
 
 <template>
-    <div class="flex justify-between gap-32 w-full">
-        <div class="max-w-[700px]" @click.self="goBack">
-            <div class=" flex flex-col bg-main-bg rounded-md">
-                <CommentsMainContent/>
-
-
-                <div class="text-white mt-10 mx-12">
-                    <CommentsTextArea/>
-
-                    <div class="my-5" v-for="n in 10" :key="n">
-                        <div class="flex">
-                            <div v-for="m in n" :key="m">
-                                <div class="w-10 h-full"></div>
-                            </div>
-                            <CommentPost/>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
+    <CommunityBanner/>
+    <div class="flex  gap-32 w-full">
+        <div class="mx-auto xl:mx-0">
+            <PostFeed class=""/>
         </div>
         <div class="
-        w-1/3 hidden xl:flex flex-col gap-4
+        w-1/3 flex-col gap-4 hidden xl:flex
         sticky top-16 overflow-hidden hover:overflow-y-scroll h-[90vh]
         bg-black rounded-lg p-4 scrollbar-styled">
             <div>
@@ -86,3 +63,7 @@ function goBack() {
     </div>
 
 </template>
+
+<style scoped>
+
+</style>

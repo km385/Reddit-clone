@@ -1,25 +1,61 @@
+<script setup lang="ts">
+import IconUser from "@/components/icons/IconUser.vue";
+import {ref} from "vue";
+import AuthenticationModal from "@/components/login/AuthenticationModal.vue";
+
+const showMenu = ref(false)
+
+function closeMenu() {
+    showMenu.value = false
+}
+
+const showLoginScreen = ref(false)
+</script>
+
 <template>
-    <div class="flex items-center gap-1 w-64 cursor-pointer h-4/5 hover:outline hover:outline-1 hover:outline-gray-400 rounded-md p-2">
-        <div class="w-6">
-            <IconUser/>
-        </div>
-        <div class="flex flex-col grow">
-            <div class="text-sm">username</div>
-            <div class="text-xs">302 karma</div>
-        </div>
-        <div class="mr-2 w-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-            </svg>
-        </div>
+    <AuthenticationModal v-if="showLoginScreen" @close="showLoginScreen = false"/>
+    <div class="relative flex cursor-pointer " @click.stop="showMenu = !showMenu">
+        <icon-user  class="w-6 cursor-pointer"/>
+        <transition name="slide-fade">
+            <div @click.stop v-if="showMenu" v-click-outside="closeMenu"
+                 class="absolute bg-main-bg right-0 top-8 shadow-lg shadow-black select-none w-[260px] py-2">
+                <div  class="flex flex-col divide-y divide-[#273133] gap-2">
+                    <div class="flex flex-col">
+                        <router-link :to="{name: 'userProfile', params: { username: 'user123'}}">
+                            <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">
+                                <div class="flex gap-2">
+                                    <div class="w-8 flex ">
+                                        <icon-user/>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <p class="text-sm">View Profile</p>
+                                        <p class="text-xs text-gray-400">u/username</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </router-link>
+                        <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Edit Avatar</div>
+                        <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Contributor Program</div>
+                        <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Dark Mode</div>
+                        <div @click="showLoginScreen = true;showMenu = false" class="hover:bg-hover-light px-7 py-4 cursor-pointer">Log Out</div>
+                    </div>
+                    <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Advertise on Reddit</div>
+                    <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Settings</div>
+                    <div class="hover:bg-hover-light px-7 py-4 cursor-pointer">Premium</div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
-<script lang="ts">
-import IconUser from "@/components/icons/IconUser.vue";
 
-export default {
-    name: 'UserMenu',
-    components: {IconUser}
+<style scoped>
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.1s;
 }
-</script>
+.slide-fade-enter-from,
+.slide-fade-leave-to
+{
+    opacity: 0;
+}
+</style>

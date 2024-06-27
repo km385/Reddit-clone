@@ -1,27 +1,38 @@
 <script setup lang="ts">
 import {RouterView} from 'vue-router'
-import RedditLogo from "@/components/navbar/RedditLogo.vue";
-import CommunitiesMenu from "@/components/navbar/SubRedditsMenu.vue";
+import RedditLogo from "@/components/icons/RedditIcon.vue";
 import SearchBar from "@/components/navbar/SearchBar.vue";
 import NavBarIcons from "@/components/navbar/NavBarIcons.vue";
-import AdvertiseButton from "@/components/navbar/AdvertiseButton.vue";
 import UserMenu from "@/components/navbar/UserMenu.vue";
+
 </script>
 
 <template>
-    <header class="fixed top-0 w-full z-[999]">
-        <div class="flex gap-4 items-center w-full bg-[#1a1a1b] text-white h-12 outline outline-1 outline-gray-700">
-            <RedditLogo/>
-            <CommunitiesMenu />
-            <SearchBar/>
-            <NavBarIcons/>
-            <AdvertiseButton/>
-            <UserMenu/>
+        <header class="fixed top-0 w-full z-[999]">
+            <div
+                class="flex justify-between gap-4 items-center w-full bg-main-bg text-white h-12 outline outline-1 outline-gray-700">
+                <router-link :to="{name: 'home'}">
+                    <div class="ml-5 py-2 cursor-pointer">
+                        <RedditLogo/>
+                    </div>
+                </router-link>
+
+
+                <div class="h-full flex items-center grow justify-center">
+                    <SearchBar class="w-3/5"/>
+                </div>
+
+            <div class="flex gap-2 mr-5">
+                <NavBarIcons/>
+                <UserMenu/>
+            </div>
         </div>
     </header>
-    <div class="bg-[#030303] pt-5 ">
+    <div class="bg-main-bg mt-12">
         <RouterView />
     </div>
 
 </template>
+
+
 
