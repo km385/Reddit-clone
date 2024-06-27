@@ -5,7 +5,7 @@
             <div class="text-sm mt-2 flex items-center gap-1 ">
                 <p class="text-white hover:text-text-blue cursor-pointer">r/shitposting</p>
                 <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
-                <DotsMenu/>
+                <ContextMenu />
             </div>
             <div class="text-white text-xl">Mam dosyć</div>
             <div class="">
@@ -31,6 +31,5 @@
 </template>
 <script setup lang="ts">
 import PostControls from "@/components/post/PostControls.vue";
-import DotsMenu from "@/components/post/DotsMenu.vue";
-
+import ContextMenu from "@/components/post/ContextMenu.vue";
 </script>

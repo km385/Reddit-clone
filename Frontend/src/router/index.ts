@@ -34,13 +34,7 @@ const router = createRouter({
             path: '/submit',
             name: 'create',
             component: () => import('../views/CreateView.vue'),
-        },
-        {
-            path: '/test',
-            name: 'test',
-            component: () => import('../views/MainLayout.vue')
-        },
-
+        }
     ]
 })
 

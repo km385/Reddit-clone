@@ -39,8 +39,7 @@ function calculateMinHeight() {
 </script>
 
 <template>
-<!--    28px is a precise navbar height-->
-    <div :style="{minHeight: minHeight}" class="mt-[28px] text-white bg-black flex justify-center">
+    <div :style="{minHeight: minHeight}" class="text-white bg-black flex justify-center">
         <div class="flex flex-col items-center w-[740px] mt-12">
             <!--        dropdown-->
             <div class="self-start w-fit bg-[#1a1a1b] border border-[#343536] rounded-sm mb-2 relative"

@@ -2,10 +2,11 @@
 
 import {onBeforeUnmount, ref} from "vue";
 import IconUser from "@/components/icons/IconUser.vue";
-import DotsMenu from "@/components/post/DotsMenu.vue";
-
+import ContextMenu from "@/components/post/ContextMenu.vue";
 const showCommunityInfo = ref(false)
 
+// timer preventing community info popup banner from disappearing
+// when mouse hovers from community name to the banner
 let hideTimeout:number|undefined
 function hideCommunityInfo() {
     hideTimeout = window.setTimeout(() => {
@@ -63,7 +64,7 @@ onBeforeUnmount(() => {
         </div>
 
         <p class="text-gray-400 grow">&#x2022; 5 hours ago</p>
-        <DotsMenu class="z-10"/>
+        <ContextMenu class="z-10"/>
     </div>
 </template>
 
